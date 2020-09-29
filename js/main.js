@@ -1,5 +1,8 @@
 'use strict';
 
+const orderMap = document.querySelector(`.map`);
+const MAP_WIDTH = orderMap.offsetWidth;
+const PIN_WIDTH = orderMap.querySelector(`.map__pin`).offsetWidth;
 const titles = [
   `Милая, уютная квартирка в центре Токио`,
   `Уютное гнездышко для молодоженов`,
@@ -10,8 +13,6 @@ const titles = [
   `Лучше 18 квадратов в этом районе`,
   `Сдам на ночь. Можно и на часы`
 ];
-const orderMap = document.querySelector(`.map`);
-const MAP_WIDTH = orderMap.offsetWidth;
 const types = [`palace`,
   `flat`,
   `house`,
@@ -63,7 +64,7 @@ const createAdsArray = (count) => {
         photos: photos.slice(getRandomIntInclusive(0, photos.length - 1))
       },
       location: {
-        x: getRandomIntInclusive(0, MAP_WIDTH),
+        x: getRandomIntInclusive(PIN_WIDTH, MAP_WIDTH),
         y: getRandomIntInclusive(130, 630)
       }
     };
@@ -80,9 +81,7 @@ const createPinFragment = (pin) => {
   for (let i = 0; i < pin.length; i++) {
     const newPin = pinTemplate.cloneNode(true);
     const pinImage = newPin.querySelector(`img`);
-    const pinWidth = pinImage.offsetWidth;
-    const pinHeight = pinImage.offsetHeight;
-    newPin.style.cssText = `left: ${pin[i].location.x + pinWidth / 2}px; top: ${pin[i].location.y + pinHeight}px;`;
+    newPin.style.cssText = `left: ${pin[i].location.x - PIN_WIDTH}px; top: ${pin[i].location.y}px;`;
     pinImage.src = pin[i].author.avatar;
     pinImage.alt = pin[i].offer.title;
     pinFragment.appendChild(newPin);
