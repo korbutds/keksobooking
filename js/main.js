@@ -55,7 +55,7 @@ const createAdsArray = (count) => {
       offer: {
         title: titles[i],
         address: `${getRandomIntInclusive(0, 1000)}, ${getRandomIntInclusive(0, 1000)}`,
-        price: getRandomIntInclusive(1000, 10000),
+        price: `${getRandomIntInclusive(1, 10) * 100}`,
         type: getRandomArrayElement(types),
         rooms: getRandomIntInclusive(1, 4),
         guests: getRandomIntInclusive(1, 10),
@@ -116,7 +116,7 @@ const createAdCard = (ad) => {
   const popupAvator = newCard.querySelector(`.popup__avatar`);
   popupTitle.textContent = ad.offer.title;
   popupAddress.textContent = ad.offer.address;
-  popupPrice.textContent = `${ad.offer.price}₽/ночь`;
+  popupPrice.textContent = `${ad.offer.price} ₽/ночь`;
   popupType.textContent = ad.offer.type;
   popupCapacity.textContent = `${ad.offer.rooms} комнат для ${ad.offer.guests} гостей`;
   popupCheck.textContent = `Заезд после ${ad.offer.checkin} выезд до ${ad.offer.checkout}`;
