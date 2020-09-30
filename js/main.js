@@ -3,6 +3,7 @@
 const orderMap = document.querySelector(`.map`);
 const MAP_WIDTH = orderMap.offsetWidth;
 const PIN_WIDTH = orderMap.querySelector(`.map__pin`).offsetWidth;
+const PIN_NUMBER = 8;
 const titles = [
   `Милая, уютная квартирка в центре Токио`,
   `Уютное гнездышко для молодоженов`,
@@ -13,7 +14,8 @@ const titles = [
   `Лучше 18 квадратов в этом районе`,
   `Сдам на ночь. Можно и на часы`
 ];
-const types = [`palace`,
+const types = [
+  `palace`,
   `flat`,
   `house`,
   `bungalow`
@@ -46,7 +48,7 @@ const getRandomArrayElement = (array) => {
 const createAdsArray = (count) => {
   const ads = [];
   for (let i = 0; i < count; i++) {
-    let ad = {
+    const ad = {
       author: {
         avatar: `img/avatars/user0${i + 1}.png`
       },
@@ -76,14 +78,14 @@ const createAdsArray = (count) => {
 const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
 
-const createPinFragment = (pin) => {
+const createPinFragment = (pins) => {
   const pinFragment = document.createDocumentFragment();
-  for (let i = 0; i < pin.length; i++) {
+  for (let i = 0; i < pins.length; i++) {
     const newPin = pinTemplate.cloneNode(true);
     const pinImage = newPin.querySelector(`img`);
-    newPin.style.cssText = `left: ${pin[i].location.x - PIN_WIDTH}px; top: ${pin[i].location.y}px;`;
-    pinImage.src = pin[i].author.avatar;
-    pinImage.alt = pin[i].offer.title;
+    newPin.style.cssText = `left: ${pins[i].location.x - PIN_WIDTH}px; top: ${pins[i].location.y}px;`;
+    pinImage.src = pins[i].author.avatar;
+    pinImage.alt = pins[i].offer.title;
     pinFragment.appendChild(newPin);
   }
 
@@ -94,4 +96,4 @@ const mapSection = document.querySelector(`.map__pins`);
 
 orderMap.classList.remove(`map--faded`);
 
-mapSection.appendChild(createPinFragment(createAdsArray(8)));
+mapSection.appendChild(createPinFragment(createAdsArray(PIN_NUMBER)));
