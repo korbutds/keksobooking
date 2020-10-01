@@ -102,7 +102,8 @@ mapSection.appendChild(createPinFragment(createAdsArray(PIN_NUMBERS)));
 
 const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
 
-const createFeatureItem = (place, array) => {
+const createFeatureItem = (card, array) => {
+  const popupFeature = card.querySelector(`.popup__features`);
   const featuresList = document.createDocumentFragment();
   for (let i = 0; i < array.length; i++) {
     const element = document.createElement(`li`);
@@ -110,18 +111,19 @@ const createFeatureItem = (place, array) => {
     element.classList.add(`popup__feature--${array[i]}`);
     featuresList.appendChild(element);
   }
-  place.innerHTML = ``;
-  place.appendChild(featuresList);
+  popupFeature.innerHTML = ``;
+  popupFeature.appendChild(featuresList);
 };
 
-const createAdPhotos = (place, array) => {
-  const emptyImg = place.querySelector(`img`).cloneNode(true);
-  place.innerHTML = ``;
+const createAdPhotos = (card, array) => {
+  const popupPhotos = card.querySelector(`.popup__photos`);
+  const emptyImg = popupPhotos.querySelector(`img`).cloneNode(true);
+  popupPhotos.innerHTML = ``;
 
   for (let j = 0; j < array.length; j++) {
     const newPhoto = emptyImg.cloneNode(true);
     newPhoto.src = array[j];
-    place.appendChild(newPhoto);
+    popupPhotos.appendChild(newPhoto);
   }
 };
 
@@ -135,13 +137,9 @@ const createAdCard = (ad) => {
   newCard.querySelector(`.popup__text--capacity`).textContent = `${ad.offer.rooms} комнат для ${ad.offer.guests} гостей`;
   newCard.querySelector(`.popup__text--time`).textContent = `Заезд после ${ad.offer.checkin} выезд до ${ad.offer.checkout}`;
 
-  const popupFeature = newCard.querySelector(`.popup__features`);
+  createFeatureItem(newCard, ad.offer.features);
 
-  createFeatureItem(popupFeature, ad.offer.features);
-
-  const popupPhotos = newCard.querySelector(`.popup__photos`);
-
-  createAdPhotos(popupPhotos, ad.offer.photos)
+  createAdPhotos(newCard, ad.offer.photos);
 
   const popupAvator = newCard.querySelector(`.popup__avatar`);
 
