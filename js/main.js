@@ -3,7 +3,7 @@
 const orderMap = document.querySelector(`.map`);
 const MAP_WIDTH = orderMap.offsetWidth;
 const PIN_WIDTH = orderMap.querySelector(`.map__pin`).offsetWidth;
-const PIN_NUMBER = 8;
+const PIN_NUMBERS = 8;
 const titles = [
   `Милая, уютная квартирка в центре Токио`,
   `Уютное гнездышко для молодоженов`,
@@ -75,6 +75,8 @@ const createAdsArray = (count) => {
   return ads;
 };
 
+const mock = createAdsArray(PIN_NUMBERS);
+
 const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
 
@@ -96,7 +98,7 @@ const mapSection = document.querySelector(`.map__pins`);
 
 orderMap.classList.remove(`map--faded`);
 
-mapSection.appendChild(createPinFragment(createAdsArray(PIN_NUMBER)));
+mapSection.appendChild(createPinFragment(createAdsArray(PIN_NUMBERS)));
 
 const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
 
@@ -145,4 +147,4 @@ const createAdCard = (ad) => {
   return cardFragment;
 };
 
-orderMap.insertBefore(createAdCard(createAdsArray(1)[0]), orderMap.querySelector(`.map__filters-container`));
+orderMap.insertBefore(createAdCard(mock[0]), orderMap.querySelector(`.map__filters-container`));
