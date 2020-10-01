@@ -114,6 +114,17 @@ const createFeatureItem = (place, array) => {
   place.appendChild(featuresList);
 };
 
+const createAdPhotos = (place, array) => {
+  const emptyImg = place.querySelector(`img`).cloneNode(true);
+  place.innerHTML = ``;
+
+  for (let j = 0; j < array.length; j++) {
+    const newPhoto = emptyImg.cloneNode(true);
+    newPhoto.src = array[j];
+    place.appendChild(newPhoto);
+  }
+};
+
 const createAdCard = (ad) => {
   const cardFragment = document.createDocumentFragment();
   const newCard = cardPopupTemplate.cloneNode(true);
@@ -125,20 +136,14 @@ const createAdCard = (ad) => {
   newCard.querySelector(`.popup__text--time`).textContent = `Заезд после ${ad.offer.checkin} выезд до ${ad.offer.checkout}`;
 
   const popupFeature = newCard.querySelector(`.popup__features`);
+
   createFeatureItem(popupFeature, ad.offer.features);
 
   const popupPhotos = newCard.querySelector(`.popup__photos`);
+
+  createAdPhotos(popupPhotos, ad.offer.photos)
+
   const popupAvator = newCard.querySelector(`.popup__avatar`);
-
-
-  const emptyImg = popupPhotos.querySelector(`img`).cloneNode(true);
-  popupPhotos.innerHTML = ``;
-
-  for (let j = 0; j < ad.offer.photos.length; j++) {
-    const newPhoto = emptyImg.cloneNode(true);
-    newPhoto.src = ad.offer.photos[j];
-    popupPhotos.appendChild(newPhoto);
-  }
 
   popupAvator.src = ad.author.avatar;
   cardFragment.appendChild(newCard);
