@@ -136,14 +136,9 @@ const createAdCard = (ad) => {
   newCard.querySelector(`.popup__type`).textContent = ad.offer.type;
   newCard.querySelector(`.popup__text--capacity`).textContent = `${ad.offer.rooms} комнат для ${ad.offer.guests} гостей`;
   newCard.querySelector(`.popup__text--time`).textContent = `Заезд после ${ad.offer.checkin} выезд до ${ad.offer.checkout}`;
-
+  newCard.querySelector(`.popup__avatar`).src = ad.author.avatar;
   createFeatureItem(newCard, ad.offer.features);
-
   createAdPhotos(newCard, ad.offer.photos);
-
-  const popupAvator = newCard.querySelector(`.popup__avatar`);
-
-  popupAvator.src = ad.author.avatar;
   cardFragment.appendChild(newCard);
 
   return cardFragment;
