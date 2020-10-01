@@ -102,6 +102,18 @@ mapSection.appendChild(createPinFragment(createAdsArray(PIN_NUMBERS)));
 
 const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
 
+const createFeatureItem = (place, array) => {
+  const featuresList = document.createDocumentFragment();
+  for (let i = 0; i < array.length; i++) {
+    const element = document.createElement(`li`);
+    element.classList.add(`popup__feature`);
+    element.classList.add(`popup__feature--${array[i]}`);
+    featuresList.appendChild(element);
+  }
+  place.innerHTML = ``;
+  place.appendChild(featuresList);
+};
+
 const createAdCard = (ad) => {
   const cardFragment = document.createDocumentFragment();
   const newCard = cardPopupTemplate.cloneNode(true);
@@ -113,24 +125,11 @@ const createAdCard = (ad) => {
   newCard.querySelector(`.popup__text--time`).textContent = `Заезд после ${ad.offer.checkin} выезд до ${ad.offer.checkout}`;
 
   const popupFeature = newCard.querySelector(`.popup__features`);
-
-  const createFeatureItem = (array) => {
-    const featuresList = document.createDocumentFragment();
-    for (let i = 0; i < array.length; i++) {
-      const element = document.createElement(`li`);
-      element.classList.add(`popup__feature`);
-      element.classList.add(`popup__feature--${array[i]}`);
-      featuresList.appendChild(element);
-    }
-
-    return featuresList;
-  };
+  createFeatureItem(popupFeature, ad.offer.features);
 
   const popupPhotos = newCard.querySelector(`.popup__photos`);
   const popupAvator = newCard.querySelector(`.popup__avatar`);
 
-  popupFeature.innerHTML = ``;
-  popupFeature.appendChild(createFeatureItem(ad.offer.features));
 
   const emptyImg = popupPhotos.querySelector(`img`).cloneNode(true);
   popupPhotos.innerHTML = ``;
