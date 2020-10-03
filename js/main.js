@@ -2,7 +2,22 @@
 
 const orderMap = document.querySelector(`.map`);
 const MAP_WIDTH = orderMap.offsetWidth;
-const PIN_WIDTH = orderMap.querySelector(`.map__pin`).offsetWidth;
+const noticeSection = document.querySelector(`.notice`);
+const adForm = noticeSection.querySelector(`.ad-form`);
+const adFormFieldsets = adForm.querySelectorAll(`.ad-form > fieldset`);
+const rooms = adForm.querySelector(`#room_number`);
+// const adRoomTypes = adFormRoomCount.children;
+const guests = adForm.querySelector(`#capacity`);
+// const adCapacityTypes = adFormCapacity.children;
+const mapFilters = orderMap.querySelector(`.map__filters`);
+const mapFiltersElements = mapFilters.children;
+const mapPins = document.querySelector(`.map__pins`);
+const mapPinMain = mapPins.querySelector(`.map__pin--main`);
+const PIN_WIDTH = mapPinMain.offsetWidth;
+const PIN_HEIGHT = mapPinMain.offsetHeight;
+const PIN_TAIL_HEIGHT = 22;
+const addressInput = adForm.querySelector(`#address`);
+const mainPinXY = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT / 2)}`;
 const PIN_NUMBERS = 8;
 const titles = [
   `Милая, уютная квартирка в центре Токио`,
@@ -35,12 +50,10 @@ const photos = [
   `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
 ];
 
-// Функция возвращающее произвольное число
 const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-// Функция, возвращающая произвольный жлемент массива
 const getRandomArrayElement = (array) => {
   return array[getRandomIntInclusive(0, array.length - 1)];
 };
@@ -96,8 +109,6 @@ const createPinFragment = (pins) => {
 
 const mapSection = document.querySelector(`.map__pins`);
 
-orderMap.classList.remove(`map--faded`);
-
 mapSection.appendChild(createPinFragment(createAdsArray(PIN_NUMBERS)));
 
 const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
@@ -143,5 +154,57 @@ const createAdCard = (ad) => {
 
   return cardFragment;
 };
+
+addressInput.value = mainPinXY;
+
+// validation
+
+const letDisabledElements = (array) => {
+  for (let element of array) {
+    element.disabled = true;
+  }
+};
+
+const letUnDisabledElements = (array) => {
+  for (let element of array) {
+    element.disabled = false;
+  }
+};
+
+letDisabledElements(adFormFieldsets);
+letDisabledElements(mapFiltersElements);
+
+const letActivePage = (evt) => {
+  if (evt.button === 0 || evt.code === `Enter`) {
+    letUnDisabledElements(adFormFieldsets);
+    letUnDisabledElements(mapFiltersElements);
+    orderMap.classList.remove(`map--faded`);
+    adForm.classList.remove(`ad-form--disabled`);
+    addressInput.value = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
+  }
+};
+
+mapPinMain.addEventListener(`mousedown`, letActivePage);
+mapPinMain.addEventListener(`keydown`, letActivePage);
+
+const roomsForGuests = {
+  1: [`1`],
+  2: [`1`, `2`],
+  3: [`1`, `2`, `3`],
+  100: [`0`]
+};
+
+const changeRoomNumberValue = (value) => {
+  [...guests.options].forEach((option) => {
+    option.disabled = !roomsForGuests[value].includes(option.value);
+  });
+  guests.value = value > 3 ? `0` : value;
+};
+
+changeRoomNumberValue(rooms.value);
+
+rooms.addEventListener(`change`, (evt) => {
+  changeRoomNumberValue(evt.target.value);
+});
 
 orderMap.insertBefore(createAdCard(mock[0]), orderMap.querySelector(`.map__filters-container`));
