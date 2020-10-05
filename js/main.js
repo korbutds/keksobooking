@@ -5,7 +5,8 @@ const MAP_WIDTH = orderMap.offsetWidth;
 const noticeSection = document.querySelector(`.notice`);
 const adForm = noticeSection.querySelector(`.ad-form`);
 const adFormFieldsets = adForm.querySelectorAll(`.ad-form > fieldset`);
-const mapFilters = orderMap.querySelector(`.map__filters`);
+const mapFiletersContainer = orderMap.querySelector(`.map__filters-container`);
+const mapFilters = mapFiletersContainer.querySelector(`.map__filters`);
 const mapFiltersElements = mapFilters.children;
 const mapPins = document.querySelector(`.map__pins`);
 const mapPinMain = mapPins.querySelector(`.map__pin--main`);
@@ -185,11 +186,12 @@ const onPopupEscPress = (evt) => {
   if (evt.key === `Escape`) {
     evt.preventDefault();
     removeCardPopup(orderMap.querySelector(`.map__card.popup`));
+    unactivatePin();
   }
 };
 
-const removeCardPopup = (popup) => {
-  popup.remove();
+const removeCardPopup = () => {
+  orderMap.querySelector(`.map__card.popup`).remove();
   document.removeEventListener(`keydown`, onPopupEscPress);
 };
 
@@ -247,18 +249,30 @@ roomsSelect.addEventListener(`change`, (evt) => {
 
 // Создание карточки
 
+const unactivatePin = () => {
+  const mapPin = mapPins.querySelectorAll(`.map__pin`);
+  mapPin.forEach((pin) => {
+    pin.classList.remove(`map__pin--active`);
+  });
+};
+
 const addAdCardClickHandler = (pinButton, pinCard) => {
   pinButton.addEventListener(`click`, () => {
-    if (orderMap.querySelector(`.map__card.popup`)) {
-      removeCardPopup(orderMap.querySelector(`.map__card.popup`));
-      orderMap.insertBefore(createAdCard(pinCard), orderMap.querySelector(`.map__filters-container`));
+    const mapCardPoput = orderMap.querySelector(`.map__card.popup`);
+    if (mapCardPoput) {
+      unactivatePin();
+      removeCardPopup();
+      orderMap.insertBefore(createAdCard(pinCard), mapFiletersContainer);
+      pinButton.classList.add(`map__pin--active`);
     } else {
-      orderMap.insertBefore(createAdCard(pinCard), orderMap.querySelector(`.map__filters-container`));
+      orderMap.insertBefore(createAdCard(pinCard), mapFiletersContainer);
+      pinButton.classList.add(`map__pin--active`);
     }
     document.addEventListener(`keydown`, onPopupEscPress);
     const closeMapPopup = orderMap.querySelector(`.popup__close`);
     closeMapPopup.addEventListener(`click`, () => {
-      removeCardPopup(orderMap.querySelector(`.map__card.popup`));
+      removeCardPopup();
+      unactivatePin();
     });
   });
 };
@@ -271,6 +285,7 @@ const setActivePage = (evt) => {
     orderMap.classList.remove(`map--faded`);
     adForm.classList.remove(`ad-form--disabled`);
     addressInput.value = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
+    addressInput.readOnly = true;
     mapSection.appendChild(pinsByMock);
     const pinsList = mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
 
