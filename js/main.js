@@ -5,8 +5,6 @@ const MAP_WIDTH = orderMap.offsetWidth;
 const noticeSection = document.querySelector(`.notice`);
 const adForm = noticeSection.querySelector(`.ad-form`);
 const adFormFieldsets = adForm.querySelectorAll(`.ad-form > fieldset`);
-const roomsSelect = adForm.querySelector(`#room_number`);
-const guestsSelect = adForm.querySelector(`#capacity`);
 const mapFilters = orderMap.querySelector(`.map__filters`);
 const mapFiltersElements = mapFilters.children;
 const mapPins = document.querySelector(`.map__pins`);
@@ -14,9 +12,13 @@ const mapPinMain = mapPins.querySelector(`.map__pin--main`);
 const PIN_WIDTH = mapPinMain.offsetWidth;
 const PIN_HEIGHT = mapPinMain.offsetHeight;
 const PIN_TAIL_HEIGHT = 22;
+const guestsSelect = adForm.querySelector(`#capacity`);
+const roomsSelect = adForm.querySelector(`#room_number`);
+const roomTypeSelect = adForm.querySelector(`#type`);
+const timeInSelect = adForm.querySelector(`#timein`);
+const timeOutSelect = adForm.querySelector(`#timeout`);
 const addressInput = adForm.querySelector(`#address`);
 const priceInput = adForm.querySelector(`#price`);
-const roomTypeSelect = adForm.querySelector(`#type`);
 const mainPinXY = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT / 2)}`;
 const PIN_NUMBERS = 8;
 const titles = [
@@ -194,12 +196,16 @@ const removeCardPopup = (popup) => {
 const changeRoomTypeValue = (value) => {
   if (value === `bungalow`) {
     priceInput.min = 0;
+    priceInput.placeholder = 0;
   } else if (value === `flat`) {
     priceInput.min = 1000;
+    priceInput.placeholder = 1000;
   } else if (value === `house`) {
     priceInput.min = 5000;
+    priceInput.placeholder = 5000;
   } else if (value === `palace`) {
     priceInput.min = 10000;
+    priceInput.placeholder = 10000;
   }
 };
 
@@ -207,6 +213,16 @@ changeRoomTypeValue(roomTypeSelect.value);
 
 roomTypeSelect.addEventListener(`change`, (evt) => {
   changeRoomTypeValue(evt.target.value);
+});
+
+const changeTimeOutValue = (value) => {
+  timeOutSelect.value = value;
+};
+
+changeTimeOutValue(timeInSelect.value);
+
+timeInSelect.addEventListener(`change`, (evt) => {
+  changeTimeOutValue(evt.target.value);
 });
 
 const roomsForGuests = {
