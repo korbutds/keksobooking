@@ -15,6 +15,7 @@ const PIN_WIDTH = mapPinMain.offsetWidth;
 const PIN_HEIGHT = mapPinMain.offsetHeight;
 const PIN_TAIL_HEIGHT = 22;
 const addressInput = adForm.querySelector(`#address`);
+const mapPopup = document.querySelector(`.map__card.popup`);
 const mainPinXY = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT / 2)}`;
 const PIN_NUMBERS = 8;
 const titles = [
@@ -177,6 +178,24 @@ disabledElements(mapFiltersElements);
 
 addressInput.value = mainPinXY;
 
+// const addCardCloseClickHandler = (closesPopup) => {
+//   closesPopup.addEventListener(`click`, () => {
+//     mapPopup.remove();
+//   });
+// };
+
+const addAdCardClickHandler = (pinButton, pinCard) => {
+  pinButton.addEventListener(`click`, () => {
+    if (mapPopup) {
+      mapPopup.remove();
+      orderMap.insertBefore(createAdCard(pinCard), orderMap.querySelector(`.map__filters-container`));
+    } else {
+      orderMap.insertBefore(createAdCard(pinCard), orderMap.querySelector(`.map__filters-container`));
+    }
+  });
+};
+
+
 const setActivePage = (evt) => {
   if (evt.button === 0 || evt.code === `Enter`) {
     unDisabledElements(adFormFieldsets);
@@ -184,13 +203,17 @@ const setActivePage = (evt) => {
     orderMap.classList.remove(`map--faded`);
     adForm.classList.remove(`ad-form--disabled`);
     addressInput.value = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
+    mapSection.appendChild(pinsByMock);
+    const pinsList = mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+
+    for (let i = 0; i < mock.length; i++) {
+      addAdCardClickHandler(pinsList[i], mock[i]);
+      // addCardCloseClickHandler(mapSection.querySelector(`.popup__close`));
+    }
   }
 };
 
 mapPinMain.addEventListener(`mousedown`, setActivePage);
-mapPinMain.addEventListener(`mouseup`, () => {
-  mapSection.appendChild(pinsByMock);
-});
 mapPinMain.addEventListener(`keydown`, setActivePage);
 
 const roomsForGuests = {
@@ -212,61 +235,3 @@ changeRoomNumberValue(roomsSelect.value);
 roomsSelect.addEventListener(`change`, (evt) => {
   changeRoomNumberValue(evt.target.value);
 });
-
-// Информация об объявлении
-// const pinsList = mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
-
-// const mockElement = mock[0];
-// orderMap.insertBefore(createAdCard(mockElement), orderMap.querySelector(`.map__filters-container`));
-
-// mapPins.addEventListener(`click`, (evt) => {
-//   if (evt.target.parentNode.classList.contains(`map__pin`) && !evt.target.parentNode.classList.contains(`map__pin--main`)) {
-//   }
-// });
-
-const addAdCardClickHandler = (pinButton, pinCard) => {
-  pinButton.addEventListener(`click`, () => {
-    orderMap.insertBefore(createAdCard(pinCard), orderMap.querySelector(`.map__filters-container`));
-  });
-};
-
-// var addThumbnailClickHandler = function (thumbnail, photo) {
-//   thumbnail.addEventListener('click', function () {
-//     console.log(thumbnail);
-//     console.log(photo);
-//   });
-// };
-
-// for (var i = 0; i < thumbnails.length; i++) {
-//   addThumbnailClickHandler(thumbnails[i], photos[i]);
-// }
-
-
-/*
-Задача
-Доработайте проект так, чтобы пользователь мог открыть карточку любого доступного объявления;
-
-Добавьте возможность закрытия карточки с подробной информацией по нажатию клавиши Esc и клике по иконке закрытия;
-
-Добавьте поддержку открытия карточки объявления с клавиатуры. Карточка объявления для выбранной метки открывается при нажатии на клавишу Enter.
-
-Сделайте так, чтобы одновременно могла быть открыта только одна карточка объявления.
-
-Обратите внимание, что у главной метки .map__pin--main не может быть карточки объявления.
-
-Использовать ли делегирование
-
-При решении этой задачи помните о том, что при клике на метку, нужно будет передавать в метод отрисовки карточки объект с данными, описывающими объявление. Если использовать для этой задачи делегирование, то нахождение этого объекта будет нетривиальным, потому что у вас будет использоваться один обработчик, у которого есть информация только о том, на каком DOM-элементе произошёл клик. Таким образом, если вы используете делегирование для решения этой задачи, вам нужно будет каким-то образом связать DOM-объекты с JS-объектами, которые их описывают.
-
-Продолжаем валидировать
-Задача
-Напишите код для валидации формы добавления нового объявления. Список полей для валидации:
-
-Поле «Заголовок объявления».
-Поле «Тип жилья».
-Поле «Цена за ночь».
-Поле «Адрес».
-Поля «Время заезда», «Время выезда».
-Поля «Фотография пользователя» и «Фотография жилья».
-Остальные поля особой валидации не требуют.
-*/
