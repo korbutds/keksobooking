@@ -15,7 +15,6 @@ const PIN_WIDTH = mapPinMain.offsetWidth;
 const PIN_HEIGHT = mapPinMain.offsetHeight;
 const PIN_TAIL_HEIGHT = 22;
 const addressInput = adForm.querySelector(`#address`);
-const mapPopup = document.querySelector(`.map__card.popup`);
 const mainPinXY = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT / 2)}`;
 const PIN_NUMBERS = 8;
 const titles = [
@@ -178,20 +177,31 @@ disabledElements(mapFiltersElements);
 
 addressInput.value = mainPinXY;
 
-// const addCardCloseClickHandler = (closesPopup) => {
-//   closesPopup.addEventListener(`click`, () => {
-//     mapPopup.remove();
-//   });
-// };
+const onPopupEscPress = (evt) => {
+  if (evt.key === `Escape`) {
+    evt.preventDefault();
+    removeCardPopup(orderMap.querySelector(`.map__card.popup`));
+  }
+};
+
+const removeCardPopup = (popup) => {
+  popup.remove();
+  document.removeEventListener(`keydown`, onPopupEscPress);
+};
 
 const addAdCardClickHandler = (pinButton, pinCard) => {
   pinButton.addEventListener(`click`, () => {
-    if (mapPopup) {
-      mapPopup.remove();
+    if (orderMap.querySelector(`.map__card.popup`)) {
+      removeCardPopup(orderMap.querySelector(`.map__card.popup`));
       orderMap.insertBefore(createAdCard(pinCard), orderMap.querySelector(`.map__filters-container`));
     } else {
       orderMap.insertBefore(createAdCard(pinCard), orderMap.querySelector(`.map__filters-container`));
     }
+    document.addEventListener(`keydown`, onPopupEscPress);
+    const closeMapPopup = orderMap.querySelector(`.popup__close`);
+    closeMapPopup.addEventListener(`click`, () => {
+      removeCardPopup(orderMap.querySelector(`.map__card.popup`));
+    });
   });
 };
 
@@ -208,7 +218,6 @@ const setActivePage = (evt) => {
 
     for (let i = 0; i < mock.length; i++) {
       addAdCardClickHandler(pinsList[i], mock[i]);
-      // addCardCloseClickHandler(mapSection.querySelector(`.popup__close`));
     }
   }
 };
