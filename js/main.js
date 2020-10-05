@@ -15,6 +15,8 @@ const PIN_WIDTH = mapPinMain.offsetWidth;
 const PIN_HEIGHT = mapPinMain.offsetHeight;
 const PIN_TAIL_HEIGHT = 22;
 const addressInput = adForm.querySelector(`#address`);
+const priceInput = adForm.querySelector(`#price`);
+const roomTypeSelect = adForm.querySelector(`#type`);
 const mainPinXY = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT / 2)}`;
 const PIN_NUMBERS = 8;
 const titles = [
@@ -189,6 +191,46 @@ const removeCardPopup = (popup) => {
   document.removeEventListener(`keydown`, onPopupEscPress);
 };
 
+const changeRoomTypeValue = (value) => {
+  if (value === `bungalow`) {
+    priceInput.min = 0;
+  } else if (value === `flat`) {
+    priceInput.min = 1000;
+  } else if (value === `house`) {
+    priceInput.min = 5000;
+  } else if (value === `palace`) {
+    priceInput.min = 10000;
+  }
+};
+
+changeRoomTypeValue(roomTypeSelect.value);
+
+roomTypeSelect.addEventListener(`change`, (evt) => {
+  changeRoomTypeValue(evt.target.value);
+});
+
+const roomsForGuests = {
+  1: [`1`],
+  2: [`1`, `2`],
+  3: [`1`, `2`, `3`],
+  100: [`0`]
+};
+
+const changeRoomNumberValue = (value) => {
+  [...guestsSelect.options].forEach((option) => {
+    option.disabled = !roomsForGuests[value].includes(option.value);
+  });
+  guestsSelect.value = value > 3 ? `0` : value;
+};
+
+changeRoomNumberValue(roomsSelect.value);
+
+roomsSelect.addEventListener(`change`, (evt) => {
+  changeRoomNumberValue(evt.target.value);
+});
+
+// Создание карточки
+
 const addAdCardClickHandler = (pinButton, pinCard) => {
   pinButton.addEventListener(`click`, () => {
     if (orderMap.querySelector(`.map__card.popup`)) {
@@ -225,22 +267,3 @@ const setActivePage = (evt) => {
 mapPinMain.addEventListener(`mousedown`, setActivePage);
 mapPinMain.addEventListener(`keydown`, setActivePage);
 
-const roomsForGuests = {
-  1: [`1`],
-  2: [`1`, `2`],
-  3: [`1`, `2`, `3`],
-  100: [`0`]
-};
-
-const changeRoomNumberValue = (value) => {
-  [...guestsSelect.options].forEach((option) => {
-    option.disabled = !roomsForGuests[value].includes(option.value);
-  });
-  guestsSelect.value = value > 3 ? `0` : value;
-};
-
-changeRoomNumberValue(roomsSelect.value);
-
-roomsSelect.addEventListener(`change`, (evt) => {
-  changeRoomNumberValue(evt.target.value);
-});
