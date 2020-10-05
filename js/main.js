@@ -5,10 +5,8 @@ const MAP_WIDTH = orderMap.offsetWidth;
 const noticeSection = document.querySelector(`.notice`);
 const adForm = noticeSection.querySelector(`.ad-form`);
 const adFormFieldsets = adForm.querySelectorAll(`.ad-form > fieldset`);
-const rooms = adForm.querySelector(`#room_number`);
-// const adRoomTypes = adFormRoomCount.children;
-const guests = adForm.querySelector(`#capacity`);
-// const adCapacityTypes = adFormCapacity.children;
+const roomsSelect = adForm.querySelector(`#room_number`);
+const guestsSelect = adForm.querySelector(`#capacity`);
 const mapFilters = orderMap.querySelector(`.map__filters`);
 const mapFiltersElements = mapFilters.children;
 const mapPins = document.querySelector(`.map__pins`);
@@ -57,6 +55,8 @@ const getRandomIntInclusive = (min, max) => {
 const getRandomArrayElement = (array) => {
   return array[getRandomIntInclusive(0, array.length - 1)];
 };
+
+// Создания массива пинов на странице.
 
 const createAdsArray = (count) => {
   const ads = [];
@@ -108,32 +108,34 @@ const createPinFragment = (pins) => {
 };
 
 const mapSection = document.querySelector(`.map__pins`);
+const pinsByMock = createPinFragment(mock);
 
-mapSection.appendChild(createPinFragment(createAdsArray(PIN_NUMBERS)));
+
+// Создание карточки объявления
 
 const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
 
-const createFeatureItem = (card, array) => {
+const createFeatureItem = (card, featuresArray) => {
   const popupFeature = card.querySelector(`.popup__features`);
   const featuresList = document.createDocumentFragment();
-  for (let i = 0; i < array.length; i++) {
+  for (let i = 0; i < featuresArray.length; i++) {
     const element = document.createElement(`li`);
     element.classList.add(`popup__feature`);
-    element.classList.add(`popup__feature--${array[i]}`);
+    element.classList.add(`popup__feature--${featuresArray[i]}`);
     featuresList.appendChild(element);
   }
   popupFeature.innerHTML = ``;
   popupFeature.appendChild(featuresList);
 };
 
-const createAdPhotos = (card, array) => {
+const createAdPhotos = (card, photoArray) => {
   const popupPhotos = card.querySelector(`.popup__photos`);
   const emptyImg = popupPhotos.querySelector(`img`).cloneNode(true);
   popupPhotos.innerHTML = ``;
 
-  for (let j = 0; j < array.length; j++) {
+  for (let j = 0; j < photoArray.length; j++) {
     const newPhoto = emptyImg.cloneNode(true);
-    newPhoto.src = array[j];
+    newPhoto.src = photoArray[j];
     popupPhotos.appendChild(newPhoto);
   }
 };
@@ -155,37 +157,41 @@ const createAdCard = (ad) => {
   return cardFragment;
 };
 
-addressInput.value = mainPinXY;
 
 // validation
 
-const letDisabledElements = (array) => {
-  for (let element of array) {
+const disabledElements = (disabledArray) => {
+  for (const element of disabledArray) {
     element.disabled = true;
   }
 };
 
-const letUnDisabledElements = (array) => {
-  for (let element of array) {
+const unDisabledElements = (undisabledArray) => {
+  for (const element of undisabledArray) {
     element.disabled = false;
   }
 };
 
-letDisabledElements(adFormFieldsets);
-letDisabledElements(mapFiltersElements);
+disabledElements(adFormFieldsets);
+disabledElements(mapFiltersElements);
 
-const letActivePage = (evt) => {
+addressInput.value = mainPinXY;
+
+const setActivePage = (evt) => {
   if (evt.button === 0 || evt.code === `Enter`) {
-    letUnDisabledElements(adFormFieldsets);
-    letUnDisabledElements(mapFiltersElements);
+    unDisabledElements(adFormFieldsets);
+    unDisabledElements(mapFiltersElements);
     orderMap.classList.remove(`map--faded`);
     adForm.classList.remove(`ad-form--disabled`);
     addressInput.value = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
   }
 };
 
-mapPinMain.addEventListener(`mousedown`, letActivePage);
-mapPinMain.addEventListener(`keydown`, letActivePage);
+mapPinMain.addEventListener(`mousedown`, setActivePage);
+mapPinMain.addEventListener(`mouseup`, () => {
+  mapSection.appendChild(pinsByMock);
+});
+mapPinMain.addEventListener(`keydown`, setActivePage);
 
 const roomsForGuests = {
   1: [`1`],
@@ -195,16 +201,72 @@ const roomsForGuests = {
 };
 
 const changeRoomNumberValue = (value) => {
-  [...guests.options].forEach((option) => {
+  [...guestsSelect.options].forEach((option) => {
     option.disabled = !roomsForGuests[value].includes(option.value);
   });
-  guests.value = value > 3 ? `0` : value;
+  guestsSelect.value = value > 3 ? `0` : value;
 };
 
-changeRoomNumberValue(rooms.value);
+changeRoomNumberValue(roomsSelect.value);
 
-rooms.addEventListener(`change`, (evt) => {
+roomsSelect.addEventListener(`change`, (evt) => {
   changeRoomNumberValue(evt.target.value);
 });
 
-orderMap.insertBefore(createAdCard(mock[0]), orderMap.querySelector(`.map__filters-container`));
+// Информация об объявлении
+// const pinsList = mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+
+// const mockElement = mock[0];
+// orderMap.insertBefore(createAdCard(mockElement), orderMap.querySelector(`.map__filters-container`));
+
+// mapPins.addEventListener(`click`, (evt) => {
+//   if (evt.target.parentNode.classList.contains(`map__pin`) && !evt.target.parentNode.classList.contains(`map__pin--main`)) {
+//   }
+// });
+
+const addAdCardClickHandler = (pinButton, pinCard) => {
+  pinButton.addEventListener(`click`, () => {
+    orderMap.insertBefore(createAdCard(pinCard), orderMap.querySelector(`.map__filters-container`));
+  });
+};
+
+// var addThumbnailClickHandler = function (thumbnail, photo) {
+//   thumbnail.addEventListener('click', function () {
+//     console.log(thumbnail);
+//     console.log(photo);
+//   });
+// };
+
+// for (var i = 0; i < thumbnails.length; i++) {
+//   addThumbnailClickHandler(thumbnails[i], photos[i]);
+// }
+
+
+/*
+Задача
+Доработайте проект так, чтобы пользователь мог открыть карточку любого доступного объявления;
+
+Добавьте возможность закрытия карточки с подробной информацией по нажатию клавиши Esc и клике по иконке закрытия;
+
+Добавьте поддержку открытия карточки объявления с клавиатуры. Карточка объявления для выбранной метки открывается при нажатии на клавишу Enter.
+
+Сделайте так, чтобы одновременно могла быть открыта только одна карточка объявления.
+
+Обратите внимание, что у главной метки .map__pin--main не может быть карточки объявления.
+
+Использовать ли делегирование
+
+При решении этой задачи помните о том, что при клике на метку, нужно будет передавать в метод отрисовки карточки объект с данными, описывающими объявление. Если использовать для этой задачи делегирование, то нахождение этого объекта будет нетривиальным, потому что у вас будет использоваться один обработчик, у которого есть информация только о том, на каком DOM-элементе произошёл клик. Таким образом, если вы используете делегирование для решения этой задачи, вам нужно будет каким-то образом связать DOM-объекты с JS-объектами, которые их описывают.
+
+Продолжаем валидировать
+Задача
+Напишите код для валидации формы добавления нового объявления. Список полей для валидации:
+
+Поле «Заголовок объявления».
+Поле «Тип жилья».
+Поле «Цена за ночь».
+Поле «Адрес».
+Поля «Время заезда», «Время выезда».
+Поля «Фотография пользователя» и «Фотография жилья».
+Остальные поля особой валидации не требуют.
+*/
