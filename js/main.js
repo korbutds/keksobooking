@@ -226,10 +226,18 @@ const changeTimeOutValue = (value) => {
   timeOutSelect.value = value;
 };
 
+const changeTimeInValue = (value) => {
+  timeInSelect.value = value;
+};
+
 changeTimeOutValue(timeInSelect.value);
 
 timeInSelect.addEventListener(`change`, (evt) => {
   changeTimeOutValue(evt.target.value);
+});
+
+timeOutSelect.addEventListener(`change`, (evt) =>{
+  changeTimeInValue(evt.target.value);
 });
 
 const roomsForGuests = {
