@@ -5,18 +5,21 @@ const MAP_WIDTH = orderMap.offsetWidth;
 const noticeSection = document.querySelector(`.notice`);
 const adForm = noticeSection.querySelector(`.ad-form`);
 const adFormFieldsets = adForm.querySelectorAll(`.ad-form > fieldset`);
-const rooms = adForm.querySelector(`#room_number`);
-// const adRoomTypes = adFormRoomCount.children;
-const guests = adForm.querySelector(`#capacity`);
-// const adCapacityTypes = adFormCapacity.children;
-const mapFilters = orderMap.querySelector(`.map__filters`);
+const mapFiletersContainer = orderMap.querySelector(`.map__filters-container`);
+const mapFilters = mapFiletersContainer.querySelector(`.map__filters`);
 const mapFiltersElements = mapFilters.children;
 const mapPins = document.querySelector(`.map__pins`);
 const mapPinMain = mapPins.querySelector(`.map__pin--main`);
 const PIN_WIDTH = mapPinMain.offsetWidth;
 const PIN_HEIGHT = mapPinMain.offsetHeight;
 const PIN_TAIL_HEIGHT = 22;
+const guestsSelect = adForm.querySelector(`#capacity`);
+const roomsSelect = adForm.querySelector(`#room_number`);
+const roomTypeSelect = adForm.querySelector(`#type`);
+const timeInSelect = adForm.querySelector(`#timein`);
+const timeOutSelect = adForm.querySelector(`#timeout`);
 const addressInput = adForm.querySelector(`#address`);
+const priceInput = adForm.querySelector(`#price`);
 const mainPinXY = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT / 2)}`;
 const PIN_NUMBERS = 8;
 const titles = [
@@ -57,6 +60,8 @@ const getRandomIntInclusive = (min, max) => {
 const getRandomArrayElement = (array) => {
   return array[getRandomIntInclusive(0, array.length - 1)];
 };
+
+// Создания массива пинов на странице.
 
 const createAdsArray = (count) => {
   const ads = [];
@@ -108,32 +113,34 @@ const createPinFragment = (pins) => {
 };
 
 const mapSection = document.querySelector(`.map__pins`);
+const pinsByMock = createPinFragment(mock);
 
-mapSection.appendChild(createPinFragment(createAdsArray(PIN_NUMBERS)));
+
+// Создание карточки объявления
 
 const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
 
-const createFeatureItem = (card, array) => {
+const createFeatureItem = (card, featuresArray) => {
   const popupFeature = card.querySelector(`.popup__features`);
   const featuresList = document.createDocumentFragment();
-  for (let i = 0; i < array.length; i++) {
+  for (let i = 0; i < featuresArray.length; i++) {
     const element = document.createElement(`li`);
     element.classList.add(`popup__feature`);
-    element.classList.add(`popup__feature--${array[i]}`);
+    element.classList.add(`popup__feature--${featuresArray[i]}`);
     featuresList.appendChild(element);
   }
   popupFeature.innerHTML = ``;
   popupFeature.appendChild(featuresList);
 };
 
-const createAdPhotos = (card, array) => {
+const createAdPhotos = (card, photoArray) => {
   const popupPhotos = card.querySelector(`.popup__photos`);
   const emptyImg = popupPhotos.querySelector(`img`).cloneNode(true);
   popupPhotos.innerHTML = ``;
 
-  for (let j = 0; j < array.length; j++) {
+  for (let j = 0; j < photoArray.length; j++) {
     const newPhoto = emptyImg.cloneNode(true);
-    newPhoto.src = array[j];
+    newPhoto.src = photoArray[j];
     popupPhotos.appendChild(newPhoto);
   }
 };
@@ -155,37 +162,83 @@ const createAdCard = (ad) => {
   return cardFragment;
 };
 
-addressInput.value = mainPinXY;
 
 // validation
 
-const letDisabledElements = (array) => {
-  for (let element of array) {
+const disabledElements = (disabledArray) => {
+  for (const element of disabledArray) {
     element.disabled = true;
   }
 };
 
-const letUnDisabledElements = (array) => {
-  for (let element of array) {
+const unDisabledElements = (undisabledArray) => {
+  for (const element of undisabledArray) {
     element.disabled = false;
   }
 };
 
-letDisabledElements(adFormFieldsets);
-letDisabledElements(mapFiltersElements);
+disabledElements(adFormFieldsets);
+disabledElements(mapFiltersElements);
 
-const letActivePage = (evt) => {
-  if (evt.button === 0 || evt.code === `Enter`) {
-    letUnDisabledElements(adFormFieldsets);
-    letUnDisabledElements(mapFiltersElements);
-    orderMap.classList.remove(`map--faded`);
-    adForm.classList.remove(`ad-form--disabled`);
-    addressInput.value = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
+addressInput.value = mainPinXY;
+
+const onPopupEscPress = (evt) => {
+  if (evt.key === `Escape`) {
+    evt.preventDefault();
+    removeCardPopup(orderMap.querySelector(`.map__card.popup`));
+    unactivatePin();
   }
 };
 
-mapPinMain.addEventListener(`mousedown`, letActivePage);
-mapPinMain.addEventListener(`keydown`, letActivePage);
+const removeCardPopup = () => {
+  orderMap.querySelector(`.map__card.popup`).remove();
+  document.removeEventListener(`keydown`, onPopupEscPress);
+};
+
+const changeRoomTypeValue = (value) => {
+  switch (value) {
+    case `bungalow`:
+      priceInput.min = 0;
+      priceInput.placeholder = 0;
+      break;
+    case `flat`:
+      priceInput.min = 1000;
+      priceInput.placeholder = 1000;
+      break;
+    case `house`:
+      priceInput.min = 5000;
+      priceInput.placeholder = 5000;
+      break;
+    case `palace`:
+      priceInput.min = 10000;
+      priceInput.placeholder = 10000;
+      break;
+  }
+};
+
+changeRoomTypeValue(roomTypeSelect.value);
+
+roomTypeSelect.addEventListener(`change`, (evt) => {
+  changeRoomTypeValue(evt.target.value);
+});
+
+const changeTimeOutValue = (value) => {
+  timeOutSelect.value = value;
+};
+
+const changeTimeInValue = (value) => {
+  timeInSelect.value = value;
+};
+
+changeTimeOutValue(timeInSelect.value);
+
+timeInSelect.addEventListener(`change`, (evt) => {
+  changeTimeOutValue(evt.target.value);
+});
+
+timeOutSelect.addEventListener(`change`, (evt) =>{
+  changeTimeInValue(evt.target.value);
+});
 
 const roomsForGuests = {
   1: [`1`],
@@ -195,16 +248,68 @@ const roomsForGuests = {
 };
 
 const changeRoomNumberValue = (value) => {
-  [...guests.options].forEach((option) => {
+  [...guestsSelect.options].forEach((option) => {
     option.disabled = !roomsForGuests[value].includes(option.value);
   });
-  guests.value = value > 3 ? `0` : value;
+  guestsSelect.value = value > 3 ? `0` : value;
 };
 
-changeRoomNumberValue(rooms.value);
+changeRoomNumberValue(roomsSelect.value);
 
-rooms.addEventListener(`change`, (evt) => {
+roomsSelect.addEventListener(`change`, (evt) => {
   changeRoomNumberValue(evt.target.value);
 });
 
-orderMap.insertBefore(createAdCard(mock[0]), orderMap.querySelector(`.map__filters-container`));
+// Создание карточки
+const activatePin = (pin) => {
+  pin.classList.add(`map__pin--active`);
+};
+
+const unactivatePin = () => {
+  const mapPin = mapPins.querySelectorAll(`.map__pin`);
+  mapPin.forEach((pin) => {
+    pin.classList.remove(`map__pin--active`);
+  });
+};
+
+const addAdCardClickHandler = (pinButton, pinCard) => {
+  pinButton.addEventListener(`click`, () => {
+    const mapCardPoput = orderMap.querySelector(`.map__card.popup`);
+    if (mapCardPoput) {
+      unactivatePin();
+      removeCardPopup();
+      orderMap.insertBefore(createAdCard(pinCard), mapFiletersContainer);
+      activatePin(pinButton);
+    } else {
+      orderMap.insertBefore(createAdCard(pinCard), mapFiletersContainer);
+      activatePin(pinButton);
+    }
+    document.addEventListener(`keydown`, onPopupEscPress);
+    const closeMapPopup = orderMap.querySelector(`.popup__close`);
+    closeMapPopup.addEventListener(`click`, () => {
+      removeCardPopup();
+      unactivatePin();
+    });
+  });
+};
+
+
+const setActivePage = (evt) => {
+  if (evt.button === 0 || evt.code === `Enter`) {
+    unDisabledElements(adFormFieldsets);
+    unDisabledElements(mapFiltersElements);
+    orderMap.classList.remove(`map--faded`);
+    adForm.classList.remove(`ad-form--disabled`);
+    addressInput.value = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
+    addressInput.readOnly = true;
+    mapSection.appendChild(pinsByMock);
+    const pinsList = mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+
+    mock.forEach((element, i) => {
+      addAdCardClickHandler(pinsList[i], element);
+    });
+  }
+};
+
+mapPinMain.addEventListener(`mousedown`, setActivePage);
+mapPinMain.addEventListener(`keydown`, setActivePage);
