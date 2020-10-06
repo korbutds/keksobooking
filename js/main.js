@@ -196,18 +196,23 @@ const removeCardPopup = () => {
 };
 
 const changeRoomTypeValue = (value) => {
-  if (value === `bungalow`) {
-    priceInput.min = 0;
-    priceInput.placeholder = 0;
-  } else if (value === `flat`) {
-    priceInput.min = 1000;
-    priceInput.placeholder = 1000;
-  } else if (value === `house`) {
-    priceInput.min = 5000;
-    priceInput.placeholder = 5000;
-  } else if (value === `palace`) {
-    priceInput.min = 10000;
-    priceInput.placeholder = 10000;
+  switch (value) {
+    case `bungalow`:
+      priceInput.min = 0;
+      priceInput.placeholder = 0;
+      break;
+    case `flat`:
+      priceInput.min = 1000;
+      priceInput.placeholder = 1000;
+      break;
+    case `house`:
+      priceInput.min = 5000;
+      priceInput.placeholder = 5000;
+      break;
+    case `palace`:
+      priceInput.min = 10000;
+      priceInput.placeholder = 10000;
+      break;
   }
 };
 
@@ -248,6 +253,9 @@ roomsSelect.addEventListener(`change`, (evt) => {
 });
 
 // Создание карточки
+const activatePin = (pin) => {
+  pin.classList.add(`map__pin--active`);
+};
 
 const unactivatePin = () => {
   const mapPin = mapPins.querySelectorAll(`.map__pin`);
@@ -263,10 +271,10 @@ const addAdCardClickHandler = (pinButton, pinCard) => {
       unactivatePin();
       removeCardPopup();
       orderMap.insertBefore(createAdCard(pinCard), mapFiletersContainer);
-      pinButton.classList.add(`map__pin--active`);
+      activatePin(pinButton);
     } else {
       orderMap.insertBefore(createAdCard(pinCard), mapFiletersContainer);
-      pinButton.classList.add(`map__pin--active`);
+      activatePin(pinButton);
     }
     document.addEventListener(`keydown`, onPopupEscPress);
     const closeMapPopup = orderMap.querySelector(`.popup__close`);
@@ -289,12 +297,11 @@ const setActivePage = (evt) => {
     mapSection.appendChild(pinsByMock);
     const pinsList = mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
 
-    for (let i = 0; i < mock.length; i++) {
-      addAdCardClickHandler(pinsList[i], mock[i]);
-    }
+    mock.forEach((element, i) => {
+      addAdCardClickHandler(pinsList[i], element);
+    });
   }
 };
 
 mapPinMain.addEventListener(`mousedown`, setActivePage);
 mapPinMain.addEventListener(`keydown`, setActivePage);
-
