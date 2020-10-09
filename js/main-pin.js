@@ -61,7 +61,24 @@
       });
     }
   };
+
+  const setDeactivePage = (evt) => {
+    evt.preventDefault();
+    if (evt.button === 0 || evt.code === `Enter`) {
+      window.util.getDisabledElements(window.data.adFormFieldsets);
+      window.util.getDisabledElements(window.data.mapFiltersElements);
+      window.data.orderMap.classList.add(`map--faded`);
+      window.data.adForm.classList.add(`ad-form--disabled`);
+      window.data.addressInput.value = `${Math.round(window.data.mapPinMain.offsetLeft + window.data.PIN_WIDTH / 2)}, ${Math.round(window.data.mapPinMain.offsetTop + window.data.PIN_HEIGHT + window.data.PIN_TAIL_HEIGHT)}`;
+    }
+  };
+
   window.data.mapPinMain.addEventListener(`mousedown`, setActivePage);
   window.data.mapPinMain.addEventListener(`keydown`, setActivePage);
   window.util.getElementMove(window.data.mapPinMain);
+
+  window.mainPin = {
+    getActivePage: setActivePage,
+    getDeactivePage: setDeactivePage
+  };
 })();

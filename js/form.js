@@ -70,4 +70,9 @@
   window.data.roomsSelect.addEventListener(`change`, (evt) => {
     changeRoomNumberValue(evt.target.value);
   });
+
+  window.data.adFormSubmit.addEventListener(`submit`, (evt) => {
+    evt.preventDefault();
+    window.mainPin.getDeactivePage();
+  });
 })();

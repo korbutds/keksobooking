@@ -5,10 +5,11 @@
 
   window.data.orderMap = document.querySelector(`.map`);
   window.data.noticeSection = document.querySelector(`.notice`);
-  window.data.mapPins = document.querySelector(`.map__pins`);
+  window.data.mapPins = window.data.orderMap.querySelector(`.map__pins`);
   window.data.MAP_WIDTH = window.data.orderMap.offsetWidth;
   window.data.adForm = window.data.noticeSection.querySelector(`.ad-form`);
   window.data.adFormFieldsets = window.data.adForm.querySelectorAll(`.ad-form > fieldset`);
+  window.data.adFormSubmit = window.data.adForm.querySelector(`.ad-form__submit`);
   window.data.mapFiletersContainer = window.data.orderMap.querySelector(`.map__filters-container`);
   window.data.mapFilters = window.data.mapFiletersContainer.querySelector(`.map__filters`);
   window.data.mapFiltersElements = window.data.mapFilters.children;
