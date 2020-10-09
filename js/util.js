@@ -34,10 +34,10 @@
       let moveFlag = false;
 
       let limits = {
-        top: 130,
-        left: 0,
-        right: window.data.MAP_WIDTH - window.data.PIN_WIDTH,
-        bottom: 630 - window.data.PIN_TAIL_HEIGHT
+        top: 130 - window.data.PIN_TAIL_HEIGHT - window.data.PIN_HEIGHT,
+        left: 0 - window.data.PIN_WIDTH / 2,
+        right: window.data.MAP_WIDTH - window.data.PIN_WIDTH / 2,
+        bottom: 630 - window.data.PIN_TAIL_HEIGHT - window.data.PIN_HEIGHT
       };
 
       const onMouseMove = (moveEvt) => {
@@ -58,17 +58,17 @@
         modal.style.top = `${modal.offsetTop - shift.y}px`;
         modal.style.left = `${modal.offsetLeft - shift.x}px`;
 
-        if (modal.offsetTop <= limits.top) {
+        if (modal.offsetTop < limits.top) {
           modal.style.top = `${limits.top}px`;
-        } else if (modal.offsetTop >= limits.bottom) {
+        } else if (modal.offsetTop > limits.bottom) {
           modal.style.top = `${limits.bottom}px`;
-        } else if (modal.offsetLeft <= limits.left) {
+        } else if (modal.offsetLeft < limits.left) {
           modal.style.left = `${limits.left}px`;
-        } else if (modal.offsetLeft >= limits.right) {
+        } else if (modal.offsetLeft > limits.right) {
           modal.style.left = `${limits.right}px`;
         }
 
-        window.data.addressInput.value = `${Math.round(modal.offsetLeft + window.data.PIN_WIDTH / 2)}, ${Math.round(modal.offsetTop + window.data.PIN_HEIGHT / 2)}`;
+        window.data.addressInput.value = `Х: ${Math.round(modal.offsetLeft + window.data.PIN_WIDTH / 2)}, Y: ${Math.round(modal.offsetTop + window.data.PIN_HEIGHT + window.data.PIN_TAIL_HEIGHT)}`;
       };
 
       const onMouseUp = (upEvt) => {
