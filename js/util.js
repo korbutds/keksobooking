@@ -40,8 +40,6 @@
         bottom: 630 - window.data.PIN_TAIL_HEIGHT
       };
 
-      console.log(limits);
-
       const onMouseMove = (moveEvt) => {
         moveEvt.preventDefault();
 
