@@ -24,7 +24,7 @@
     pin.classList.add(`map__pin--active`);
   };
 
-  const addAdCardClickHandler = (pinButton, pinCard) => {
+  const onAdCardClickHandler = (pinButton, pinCard) => {
     pinButton.addEventListener(`click`, () => {
       const mapCardPoput = window.data.orderMap.querySelector(`.map__card.popup`);
       if (mapCardPoput) {
@@ -57,7 +57,7 @@
       const pinsList = window.data.mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
 
       window.map.mock.forEach((element, i) => {
-        addAdCardClickHandler(pinsList[i], element);
+        onAdCardClickHandler(pinsList[i], element);
       });
     }
   };
