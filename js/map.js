@@ -30,8 +30,6 @@
     return ads;
   };
 
-  const mock = createAdsArray(window.data.PIN_NUMBERS);
-
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
   const createPinFragment = (pins) => {
@@ -48,12 +46,8 @@
     return pinFragment;
   };
 
-  const pinsByMock = createPinFragment(mock);
-
   window.map = {
     getAdsArray: createAdsArray,
-    getPinFragment: createPinFragment,
-    mock: createAdsArray(window.data.PIN_NUMBERS),
-    mockPins: pinsByMock
+    getPinFragment: createPinFragment
   };
 })();
