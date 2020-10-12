@@ -30,12 +30,11 @@
       if (mapCardPoput) {
         unactivatePin();
         removeCardPopup();
-        window.data.orderMap.insertBefore(window.card.getAdCard(pinCard), window.data.mapFiltersContainer);
         activatePin(pinButton);
       } else {
-        window.data.orderMap.insertBefore(window.card.getAdCard(pinCard), window.data.mapFiltersContainer);
         activatePin(pinButton);
       }
+      window.data.orderMap.insertBefore(window.card.getAdCard(pinCard), window.data.mapFiltersContainer);
       document.addEventListener(`keydown`, onPopupEscPress);
       const closeMapPopup = window.data.orderMap.querySelector(`.popup__close`);
       closeMapPopup.addEventListener(`click`, () => {
