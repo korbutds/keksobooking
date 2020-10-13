@@ -11,10 +11,14 @@
     const xhr = new XMLHttpRequest();
 
     xhr.responseType = `json`;
+    xhr.open(`GET`, URL);
 
     xhr.addEventListener(`load`, () => {
-      successLoad(xhr.response);
-      console.log(`loaded`);
+      if (xhr.status === 200) {
+        successLoad(xhr.response);
+      } else {
+        console.log(`Статус ответа: ${xhr.status} ${xhr.statusText}`);
+      }
       // if (xhr.status === STATUS_CODE.OK) {
       // } else {
       //   errorLoad(`Статус ответа: ${xhr.status} ${xhr.statusText}`);
@@ -26,7 +30,6 @@
       //   errorLoad(`Запрос не успел выполниться за ${xhr.timeout}мс`);
     });
     // xhr.timeout = TIMEOUT_IN_MS;
-    xhr.open(`GET`, URL);
     xhr.send();
   };
 
