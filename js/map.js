@@ -32,7 +32,7 @@
 
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
-  let pinsFragmen = [];
+
   const createPinFragment = (pins) => {
     const pinFragment = document.createDocumentFragment();
     for (let i = 0; i < pins.length; i++) {
@@ -46,13 +46,6 @@
 
     return pinFragment;
   };
-
-  const asd = window.server.loadData(createPinFragment);
-
-  window.server.loadData(createPinFragment);
-
-  console.log(asd)
-
 
   const createPinsMap = (pins) => {
     const mockPins = createPinFragment(pins);

@@ -2,7 +2,7 @@
 (() => {
   const setActivePage = () => {
     return (evt) => {
-      if (evt.button === 0 || evt.code === `Enter`) {
+      if (window.data.orderMap.classList.contains(`map--faded`) && (evt.button === 0 || evt.code === `Enter`)) {
         window.util.getUnDisabledElements(window.data.adFormFieldsets);
         window.util.getUnDisabledElements(window.data.mapFiltersElements);
         window.data.orderMap.classList.remove(`map--faded`);
