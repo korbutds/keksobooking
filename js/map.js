@@ -57,9 +57,22 @@
     });
   };
 
+  const errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
+
+  const errorMessage = (errorText) => {
+    const errorFragment = document.createDocumentFragment();
+    const newErrMessage = errorTemplate.cloneNode(true);
+    newErrMessage.querySelector(`.error__message`).textContent = errorText;
+    errorFragment.appendChild(newErrMessage);
+    window.data.mapSection.appendChild(errorFragment);
+    window.pageActivate.getDeactivePage();
+  };
+
+
   window.map = {
     getAdsArray: createAdsArray,
     getPinFragment: createPinFragment,
-    getPinMap: createPinsMap
+    getPinMap: createPinsMap,
+    getErrorMessage: errorMessage
   };
 })();
