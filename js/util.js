@@ -1,13 +1,12 @@
 'use strict';
 (() => {
-  const getRandom = (min, max) => {
+  const getRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
   const getRandomElement = (array) => {
-    return array[getRandom(0, array.length - 1)];
+    return array[getRandomNumber(0, array.length - 1)];
   };
-
 
   const disabledElements = (disabledArray) => {
     for (const element of disabledArray) {
@@ -22,9 +21,9 @@
   };
 
   window.util = {
-    getRandomIntInclusive: getRandom,
+    getRandomIntInclusive: getRandomNumber,
     getRandomArrayElement: getRandomElement,
     getDisabledElements: disabledElements,
-    getUnDisabledElements: unDisabledElements,
+    getUnDisabledElements: unDisabledElements
   };
 })();
