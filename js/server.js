@@ -5,7 +5,7 @@
     const STATUS_CODE = {
       OK: 200
     };
-    const TIMEOUT_IN_MS = 10;
+    const TIMEOUT_IN_MS = 1000;
 
     const URL = `https://21.javascript.pages.academy/keksobooking/data`;
     const xhr = new XMLHttpRequest();

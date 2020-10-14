@@ -66,6 +66,12 @@
     errorFragment.appendChild(newErrMessage);
     window.data.mapSection.appendChild(errorFragment);
     window.pageActivate.getDeactivePage();
+    const errorButton = newErrMessage.querySelector(`button`);
+    const onErrorButtonClick = () => {
+      newErrMessage.remove()
+      errorButton.removeEventListener(`click`, onErrorButtonClick);
+    }
+    errorButton.addEventListener(`click`, onErrorButtonClick);
   };
 
 
