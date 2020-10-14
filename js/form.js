@@ -71,8 +71,8 @@
     changeRoomNumberValue(evt.target.value);
   });
 
-  window.data.adFormSubmit.addEventListener(`submit`, (evt) => {
+  window.data.adForm.addEventListener(`submit`, (evt) => {
     evt.preventDefault();
-    window.mainPin.getDeactivePage();
+    window.server.getServerRequest(window.data.saveData, window.server.getSuccessMessage, window.server.getErrorMessage, new FormData(window.data.adForm));
   });
 })();

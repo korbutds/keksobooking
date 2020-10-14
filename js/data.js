@@ -56,11 +56,19 @@
     `http://o0.github.io/assets/images/tokyo/hotel2.jpg`,
     `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
   ];
+  window.data.loadData = {
+    URL: `https://21.javascript.pages.academy/keksobooking/data`,
+    type: `GET`
+  };
+  window.data.saveData = {
+    URL: `https://21.javascript.pages.academy/keksobooking`,
+    type: `POST`
+  };
   window.data.mapSection = document.querySelector(`.map__pins`);
   window.data.getServerData = (pins) => {
     window.data.serverData = pins.slice();
   };
-  window.server.loadData(window.data.getServerData, window.server.getErrorMessage);
+  window.server.getServerRequest(window.data.loadData, window.data.getServerData, window.server.getErrorMessage);
   window.data.KEKS_PIN_FRINGE = {
     top: 130 - window.data.PIN_TAIL_HEIGHT - window.data.PIN_HEIGHT,
     left: 0 - window.data.PIN_WIDTH / 2,
