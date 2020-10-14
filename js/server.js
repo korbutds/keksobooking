@@ -27,11 +27,19 @@
     const newSuccessMessage = successTemplate.cloneNode(true);
     successFragment.appendChild(newSuccessMessage);
     document.querySelector(`main`).appendChild(successFragment);
-    const outOfSuccesseMessage = () => {
-      newSuccessMessage.remove();
-      document.removeEventListener(`click`, outOfSuccesseMessage);
+    window.pageActivate.getDeactivePage();
+    window.data.adForm.reset();
+    const outOfSuccessMessage = () => {
+      return (evt) => {
+        if (evt.code === `Escape` || evt.button === 0) {
+          newSuccessMessage.remove();
+          document.removeEventListener(`click`, outOfSuccessMessage());
+          document.removeEventListener(`keydown`, outOfSuccessMessage());
+        }
+      };
     };
-    document.addEventListener(`click`, outOfSuccesseMessage);
+    document.addEventListener(`click`, outOfSuccessMessage());
+    document.addEventListener(`keydown`, outOfSuccessMessage());
   };
 
   // const getServerResponse = (successLoad, errorLoad, method ,url, data) => {
@@ -79,7 +87,7 @@
       OK: 200
     };
 
-    const TIMEOUT_IN_MS = 100;
+    const TIMEOUT_IN_MS = 1000;
     let successFlag = false;
 
     if (requestData.type === `POST`) {

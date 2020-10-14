@@ -17,6 +17,7 @@
   window.data.PIN_WIDTH = window.data.mapPinMain.offsetWidth;
   window.data.PIN_HEIGHT = window.data.mapPinMain.offsetHeight;
   window.data.PIN_TAIL_HEIGHT = 22;
+  window.data.adTitle = window.data.adForm.querySelector(`#title`);
   window.data.guestsSelect = window.data.adForm.querySelector(`#capacity`);
   window.data.roomsSelect = window.data.adForm.querySelector(`#room_number`);
   window.data.roomTypeSelect = window.data.adForm.querySelector(`#type`);
