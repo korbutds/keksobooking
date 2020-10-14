@@ -57,28 +57,9 @@
     });
   };
 
-  const errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
-
-  const errorMessage = (errorText) => {
-    const errorFragment = document.createDocumentFragment();
-    const newErrMessage = errorTemplate.cloneNode(true);
-    newErrMessage.querySelector(`.error__message`).textContent = errorText;
-    errorFragment.appendChild(newErrMessage);
-    window.data.mapSection.appendChild(errorFragment);
-    window.pageActivate.getDeactivePage();
-    const errorButton = newErrMessage.querySelector(`button`);
-    const onErrorButtonClick = () => {
-      newErrMessage.remove()
-      errorButton.removeEventListener(`click`, onErrorButtonClick);
-    }
-    errorButton.addEventListener(`click`, onErrorButtonClick);
-  };
-
-
   window.map = {
     getAdsArray: createAdsArray,
     getPinFragment: createPinFragment,
-    getPinMap: createPinsMap,
-    getErrorMessage: errorMessage
+    getPinMap: createPinsMap
   };
 })();

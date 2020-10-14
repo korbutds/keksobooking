@@ -9,7 +9,7 @@
         window.data.adForm.classList.remove(`ad-form--disabled`);
         window.data.addressInput.value = `X: ${Math.round(window.data.mapPinMain.offsetLeft + window.data.PIN_WIDTH / 2)}, Y: ${Math.round(window.data.mapPinMain.offsetTop + window.data.PIN_HEIGHT + window.data.PIN_TAIL_HEIGHT)}`;
         window.data.addressInput.readOnly = true;
-        window.server.loadData(window.map.getPinMap, window.map.getErrorMessage);
+        window.map.getPinMap(window.data.serverData);
       }
     };
   };
