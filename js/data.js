@@ -8,6 +8,7 @@
   window.data.mapPins = window.data.orderMap.querySelector(`.map__pins`);
   window.data.MAP_WIDTH = window.data.orderMap.offsetWidth;
   window.data.adForm = window.data.noticeSection.querySelector(`.ad-form`);
+  window.data.adFormReset = window.data.adForm.querySelector(`.ad-form__reset`);
   window.data.adFormFieldsets = window.data.adForm.querySelectorAll(`.ad-form > fieldset`);
   window.data.adFormSubmit = window.data.adForm.querySelector(`.ad-form__submit`);
   window.data.mapFiltersContainer = window.data.orderMap.querySelector(`.map__filters-container`);

@@ -75,4 +75,18 @@
     evt.preventDefault();
     window.server.getServerRequest(window.data.saveData, window.server.getSuccessMessage, window.server.getErrorMessage, new FormData(window.data.adForm));
   });
+
+
+  window.data.adForm.addEventListener(`reset`, (evt) => {
+    evt.preventDefault();
+    // window.data.adForm.reset();
+    console.log(`click`)
+    window.data.addressInput.value = window.data.mainPinXY;
+    changeRoomNumberValue(window.data.roomsSelect.value);
+  });
+  window.data.adForm.reset();
+  // window.data.adFormReset.addEventListener(`click`, (evt) => {
+  //   window.data.addressInput.value = window.data.mainPinXY;
+  //   changeRoomNumberValue(window.data.roomsSelect.value);
+  // });
 })();
