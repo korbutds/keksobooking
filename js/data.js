@@ -15,6 +15,10 @@
   window.data.mapFilters = window.data.mapFiltersContainer.querySelector(`.map__filters`);
   window.data.mapFiltersElements = window.data.mapFilters.children;
   window.data.mapPinMain = window.data.mapPins.querySelector(`.map__pin--main`);
+  window.data.mapPinMainCoords = {
+    left: `570px`,
+    top: `375px`
+  };
   window.data.PIN_WIDTH = window.data.mapPinMain.offsetWidth;
   window.data.PIN_HEIGHT = window.data.mapPinMain.offsetHeight;
   window.data.PIN_TAIL_HEIGHT = 22;
@@ -26,6 +30,8 @@
   window.data.timeOutSelect = window.data.adForm.querySelector(`#timeout`);
   window.data.addressInput = window.data.adForm.querySelector(`#address`);
   window.data.priceInput = window.data.adForm.querySelector(`#price`);
+  window.data.description = window.data.adForm.querySelector(`#description`);
+  window.data.featuresCheckboxes = window.data.adForm.querySelectorAll(`.feature__checkbox`);
   window.data.mainPinXY = `X: ${Math.round(window.data.mapPinMain.offsetLeft + window.data.PIN_WIDTH / 2)}, Y: ${Math.round(window.data.mapPinMain.offsetTop + window.data.PIN_HEIGHT / 2)}`;
   window.data.PIN_NUMBERS = 8;
   window.data.titles = [

@@ -7,31 +7,24 @@
   window.data.addressInput.value = window.data.mainPinXY;
 
   const changeRoomTypeValue = (value) => {
+    let roomPrice = 0;
     switch (value) {
       case `bungalow`:
-        window.data.priceInput.min = 0;
-        window.data.priceInput.placeholder = 0;
+        roomPrice = 0;
         break;
       case `flat`:
-        window.data.priceInput.min = 1000;
-        window.data.priceInput.placeholder = 1000;
+        roomPrice = 1000;
         break;
       case `house`:
-        window.data.priceInput.min = 5000;
-        window.data.priceInput.placeholder = 5000;
+        roomPrice = 5000;
         break;
       case `palace`:
-        window.data.priceInput.min = 10000;
-        window.data.priceInput.placeholder = 10000;
+        roomPrice = 10000;
         break;
     }
+    window.data.priceInput.min = roomPrice;
+    window.data.priceInput.placeholder = roomPrice;
   };
-
-  changeRoomTypeValue(window.data.roomTypeSelect.value);
-
-  window.data.roomTypeSelect.addEventListener(`change`, (evt) => {
-    changeRoomTypeValue(evt.target.value);
-  });
 
   const changeTimeOutValue = (value) => {
     window.data.timeOutSelect.value = value;
@@ -40,6 +33,13 @@
   const changeTimeInValue = (value) => {
     window.data.timeInSelect.value = value;
   };
+
+  changeRoomTypeValue(window.data.roomTypeSelect.value);
+
+  window.data.roomTypeSelect.addEventListener(`change`, (evt) => {
+    changeRoomTypeValue(evt.target.value);
+  });
+
 
   changeTimeOutValue(window.data.timeInSelect.value);
 
@@ -79,14 +79,11 @@
 
   window.data.adForm.addEventListener(`reset`, (evt) => {
     evt.preventDefault();
-    // window.data.adForm.reset();
-    console.log(`click`)
-    window.data.addressInput.value = window.data.mainPinXY;
     changeRoomNumberValue(window.data.roomsSelect.value);
+    window.pageActivate.getDeactivePage();
   });
-  window.data.adForm.reset();
-  // window.data.adFormReset.addEventListener(`click`, (evt) => {
-  //   window.data.addressInput.value = window.data.mainPinXY;
-  //   changeRoomNumberValue(window.data.roomsSelect.value);
-  // });
+
+  window.form = {
+    getChangeRoomTypeValue: changeRoomTypeValue
+  };
 })();
