@@ -7,31 +7,24 @@
   window.data.addressInput.value = window.data.mainPinXY;
 
   const changeRoomTypeValue = (value) => {
+    let roomPrice = 0;
     switch (value) {
       case `bungalow`:
-        window.data.priceInput.min = 0;
-        window.data.priceInput.placeholder = 0;
+        roomPrice = 0;
         break;
       case `flat`:
-        window.data.priceInput.min = 1000;
-        window.data.priceInput.placeholder = 1000;
+        roomPrice = 1000;
         break;
       case `house`:
-        window.data.priceInput.min = 5000;
-        window.data.priceInput.placeholder = 5000;
+        roomPrice = 5000;
         break;
       case `palace`:
-        window.data.priceInput.min = 10000;
-        window.data.priceInput.placeholder = 10000;
+        roomPrice = 10000;
         break;
     }
+    window.data.priceInput.min = roomPrice;
+    window.data.priceInput.placeholder = roomPrice;
   };
-
-  changeRoomTypeValue(window.data.roomTypeSelect.value);
-
-  window.data.roomTypeSelect.addEventListener(`change`, (evt) => {
-    changeRoomTypeValue(evt.target.value);
-  });
 
   const changeTimeOutValue = (value) => {
     window.data.timeOutSelect.value = value;
@@ -40,6 +33,13 @@
   const changeTimeInValue = (value) => {
     window.data.timeInSelect.value = value;
   };
+
+  changeRoomTypeValue(window.data.roomTypeSelect.value);
+
+  window.data.roomTypeSelect.addEventListener(`change`, (evt) => {
+    changeRoomTypeValue(evt.target.value);
+  });
+
 
   changeTimeOutValue(window.data.timeInSelect.value);
 
@@ -71,8 +71,47 @@
     changeRoomNumberValue(evt.target.value);
   });
 
-  window.data.adFormSubmit.addEventListener(`submit`, (evt) => {
+  window.data.adForm.addEventListener(`submit`, (evt) => {
     evt.preventDefault();
-    window.mainPin.getDeactivePage();
+    window.server.getServerRequest(window.data.saveData, window.server.getSuccessMessage, window.server.getErrorMessage, new FormData(window.data.adForm));
   });
+
+
+  window.data.adForm.addEventListener(`reset`, (evt) => {
+    evt.preventDefault();
+    changeRoomNumberValue(window.data.roomsSelect.value);
+    // window.pageActivate.getDeactivePage();
+    window.form.getResetForm();
+
+  });
+
+  const standartValue = {
+    title: ``,
+    roomTypeValue: `flat`,
+    roomPrice: 1000,
+    numberOfRooms: 1,
+    timeInSelect: `12:00`,
+    guestsValue: 1
+  };
+
+  const resetForm = () => {
+    window.data.adTitle.value = ``;
+    window.data.roomTypeSelect.value = standartValue.roomTypeValue;
+    window.data.roomsSelect.value = standartValue.numberOfRooms;
+    window.data.priceInput.value = ``;
+    window.data.priceInput.placeholder = standartValue.roomPrice;
+    window.data.description.value = ``;
+    window.data.timeInSelect.value = standartValue.timeInSelect;
+    window.data.timeOutSelect.value = window.data.timeInSelect.value;
+    window.data.guestsSelect.value = standartValue.guestsValue;
+    window.data.adPhoto.value = ``;
+    window.data.adAvatar.value = ``;
+    [...window.data.featuresCheckboxes].forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+  };
+
+  window.form = {
+    getResetForm: resetForm
+  };
 })();
