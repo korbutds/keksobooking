@@ -32,6 +32,7 @@
 
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
+
   const createPinFragment = (pins) => {
     const pinFragment = document.createDocumentFragment();
     for (let i = 0; i < pins.length; i++) {
@@ -46,8 +47,19 @@
     return pinFragment;
   };
 
+  const createPinsMap = (pins) => {
+    const mockPins = createPinFragment(pins);
+    window.data.mapSection.appendChild(mockPins);
+    const pinsList = window.data.mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+
+    pins.forEach((element, i) => {
+      return window.pin.onAdCardClick(pinsList[i], element);
+    });
+  };
+
   window.map = {
     getAdsArray: createAdsArray,
-    getPinFragment: createPinFragment
+    getPinFragment: createPinFragment,
+    getPinMap: createPinsMap
   };
 })();
