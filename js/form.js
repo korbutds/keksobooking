@@ -104,6 +104,8 @@
     window.data.timeInSelect.value = standartValue.timeInSelect;
     window.data.timeOutSelect.value = window.data.timeInSelect.value;
     window.data.guestsSelect.value = standartValue.guestsValue;
+    window.data.adPhoto.value = ``;
+    window.data.adAvatar.value = ``;
     [...window.data.featuresCheckboxes].forEach((checkbox) => {
       checkbox.checked = false;
     });

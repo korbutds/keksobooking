@@ -22,6 +22,7 @@
   window.data.PIN_WIDTH = window.data.mapPinMain.offsetWidth;
   window.data.PIN_HEIGHT = window.data.mapPinMain.offsetHeight;
   window.data.PIN_TAIL_HEIGHT = 22;
+  window.data.adAvatar = window.data.adForm.querySelector(`#avatar`);
   window.data.adTitle = window.data.adForm.querySelector(`#title`);
   window.data.guestsSelect = window.data.adForm.querySelector(`#capacity`);
   window.data.roomsSelect = window.data.adForm.querySelector(`#room_number`);
@@ -31,6 +32,7 @@
   window.data.addressInput = window.data.adForm.querySelector(`#address`);
   window.data.priceInput = window.data.adForm.querySelector(`#price`);
   window.data.description = window.data.adForm.querySelector(`#description`);
+  window.data.adPhoto = window.data.adForm.querySelector(`#images`);
   window.data.featuresCheckboxes = window.data.adForm.querySelectorAll(`.feature__checkbox`);
   window.data.mainPinXY = `X: ${Math.round(window.data.mapPinMain.offsetLeft + window.data.PIN_WIDTH / 2)}, Y: ${Math.round(window.data.mapPinMain.offsetTop + window.data.PIN_HEIGHT / 2)}`;
   window.data.PIN_NUMBERS = 8;
