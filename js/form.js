@@ -80,10 +80,36 @@
   window.data.adForm.addEventListener(`reset`, (evt) => {
     evt.preventDefault();
     changeRoomNumberValue(window.data.roomsSelect.value);
-    window.pageActivate.getDeactivePage();
+    // window.pageActivate.getDeactivePage();
+    window.form.getResetForm();
+
   });
 
+  const standartValue = {
+    title: ``,
+    roomTypeValue: `flat`,
+    roomPrice: 1000,
+    numberOfRooms: 1,
+    timeInSelect: `12:00`,
+    guestsValue: 1
+  };
+
+  const resetForm = () => {
+    window.data.adTitle.value = ``;
+    window.data.roomTypeSelect.value = standartValue.roomTypeValue;
+    window.data.roomsSelect.value = standartValue.numberOfRooms;
+    window.data.priceInput.value = ``;
+    window.data.priceInput.placeholder = standartValue.roomPrice;
+    window.data.description.value = ``;
+    window.data.timeInSelect.value = standartValue.timeInSelect;
+    window.data.timeOutSelect.value = window.data.timeInSelect.value;
+    window.data.guestsSelect.value = standartValue.guestsValue;
+    [...window.data.featuresCheckboxes].forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+  };
+
   window.form = {
-    getChangeRoomTypeValue: changeRoomTypeValue
+    getResetForm: resetForm
   };
 })();

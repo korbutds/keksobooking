@@ -27,6 +27,7 @@
     const newSuccessMessage = successTemplate.cloneNode(true);
     successFragment.appendChild(newSuccessMessage);
     document.querySelector(`main`).appendChild(successFragment);
+    window.pageActivate.getDeactivePage();
     window.data.adForm.reset();
     const outOfSuccessMessage = () => {
       return (evt) => {
