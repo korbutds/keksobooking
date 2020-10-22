@@ -44,7 +44,18 @@
     });
   };
 
+  const removePins = () => {
+    const pinsList = window.data.mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+
+    pinsList.forEach((element) => {
+      element.remove();
+    });
+  };
+
   window.pin = {
-    onAdCardClick: onCardElementClick
+    onAdCardClick: onCardElementClick,
+    getRemovePopup: removeCardPopup,
+    getUnactivatePin: unactivatePin,
+    getRemovePins: removePins
   };
 })();
