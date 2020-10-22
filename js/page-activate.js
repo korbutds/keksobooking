@@ -14,15 +14,6 @@
     };
   };
 
-  // const standartValue = {
-  //   title: ``,
-  //   roomTypeValue: `flat`,
-  //   roomPrice: 1000,
-  //   numberOfRooms: 1,
-  //   timeInSelect: `12:00`,
-  //   guestsValue: 1
-  // };
-
   const setDeactivePage = () => {
     window.util.getDisabledElements(window.data.adFormFieldsets);
     window.util.getDisabledElements(window.data.mapFiltersElements);
@@ -31,11 +22,7 @@
     window.data.mapPinMain.style.top = window.data.mapPinMainCoords.top;
     window.data.mapPinMain.style.left = window.data.mapPinMainCoords.left;
     window.data.addressInput.value = `X: ${Math.round(window.data.mapPinMain.offsetLeft + window.data.PIN_WIDTH / 2)}, ${Math.round(window.data.mapPinMain.offsetTop + window.data.PIN_HEIGHT / 2)}`;
-    const pinsList = window.data.mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
-
-    pinsList.forEach((element) => {
-      element.remove();
-    });
+    window.pin.getRemovePins();
   };
 
   window.pageActivate = {

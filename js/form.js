@@ -80,7 +80,7 @@
   window.data.adForm.addEventListener(`reset`, (evt) => {
     evt.preventDefault();
     changeRoomNumberValue(window.data.roomsSelect.value);
-    // window.pageActivate.getDeactivePage();
+    window.pageActivate.getDeactivePage();
     window.form.getResetForm();
 
   });

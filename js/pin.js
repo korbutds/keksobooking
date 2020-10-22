@@ -12,8 +12,10 @@
   };
 
   const removeCardPopup = () => {
-    window.data.orderMap.querySelector(`.map__card.popup`).remove();
-    document.removeEventListener(`keydown`, onPopupEscPress);
+    if (window.data.orderMap.querySelector(`.map__card.popup`)) {
+      window.data.orderMap.querySelector(`.map__card.popup`).remove();
+      document.removeEventListener(`keydown`, onPopupEscPress);
+    }
   };
 
   const onPopupEscPress = (evt) => {
@@ -44,7 +46,18 @@
     });
   };
 
+  const removePins = () => {
+    const pinsList = window.data.mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+
+    pinsList.forEach((element) => {
+      element.remove();
+    });
+  };
+
   window.pin = {
-    onAdCardClick: onCardElementClick
+    onAdCardClick: onCardElementClick,
+    getRemovePopup: removeCardPopup,
+    getUnactivatePin: unactivatePin,
+    getRemovePins: removePins
   };
 })();
