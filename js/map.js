@@ -66,10 +66,19 @@
     const mockPins = createPinFragment(pins);
     window.data.mapSection.appendChild(mockPins);
     const pinsList = window.data.mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    let pinsCount;
+    if (pins.length > PIN_NUMBER) {
+      pinsCount = PIN_NUMBER;
+    } else {
+      pinsCount = pins.length;
+    }
 
-    pins.forEach((element, i) => {
-      return window.pin.onAdCardClick(pinsList[i], element);
-    });
+    for (let i = 0; i < pinsCount; i++) {
+      window.pin.onAdCardClick(pinsList[i], pins[i]);
+    }
+    // pins.forEach((element, i) => {
+    // return window.pin.onAdCardClick(pinsList[i], element);
+    // });
   };
 
   window.map = {
