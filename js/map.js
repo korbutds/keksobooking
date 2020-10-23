@@ -36,30 +36,22 @@
 
   const createPinFragment = (pins) => {
     const pinFragment = document.createDocumentFragment();
+    let pinsCount;
     if (pins.length > PIN_NUMBER) {
-      for (let i = 0; i < PIN_NUMBER; i++) {
-        const newPin = pinTemplate.cloneNode(true);
-        const pinImage = newPin.querySelector(`img`);
-        newPin.style.cssText = `left: ${pins[i].location.x - window.data.PIN_WIDTH}px; top: ${pins[i].location.y}px;`;
-        pinImage.src = pins[i].author.avatar;
-        pinImage.alt = pins[i].offer.title;
-        pinFragment.appendChild(newPin);
-      }
-
-      return pinFragment;
-
+      pinsCount = PIN_NUMBER;
     } else {
-      for (let i = 0; i < pins.length; i++) {
-        const newPin = pinTemplate.cloneNode(true);
-        const pinImage = newPin.querySelector(`img`);
-        newPin.style.cssText = `left: ${pins[i].location.x - window.data.PIN_WIDTH}px; top: ${pins[i].location.y}px;`;
-        pinImage.src = pins[i].author.avatar;
-        pinImage.alt = pins[i].offer.title;
-        pinFragment.appendChild(newPin);
-      }
-
-      return pinFragment;
+      pinsCount = pins.length;
     }
+    for (let i = 0; i < pinsCount; i++) {
+      const newPin = pinTemplate.cloneNode(true);
+      const pinImage = newPin.querySelector(`img`);
+      newPin.style.cssText = `left: ${pins[i].location.x - window.data.PIN_WIDTH}px; top: ${pins[i].location.y}px;`;
+      pinImage.src = pins[i].author.avatar;
+      pinImage.alt = pins[i].offer.title;
+      pinFragment.appendChild(newPin);
+    }
+
+    return pinFragment;
   };
 
   const createPinsMap = (pins) => {
