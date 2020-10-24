@@ -23,6 +23,7 @@
     window.data.mapPinMain.style.left = window.data.mapPinMainCoords.left;
     window.data.addressInput.value = `X: ${Math.round(window.data.mapPinMain.offsetLeft + window.data.PIN_WIDTH / 2)}, ${Math.round(window.data.mapPinMain.offsetTop + window.data.PIN_HEIGHT / 2)}`;
     window.pin.getRemovePins();
+    window.filter.getFilterReset();
   };
 
   window.pageActivate = {

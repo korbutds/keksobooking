@@ -1,64 +1,99 @@
 'use strict';
-
 (() => {
-  // const mapFilterData = [
-  //   {
-  //     selectId: `housing-type`,
-  //     values: [`any`, `palace`, `flat`, `house`, `bungalow`]
-  //   },
-  //   {
-  //     selectId: `housing-price`
-  //   },
-  //   {
-  //     selectId: `housing-rooms`
-  //   },
-  //   {
-  //     selectId: `housing-guests`
-  //   }
-  // ];
-
   const mapFilters = document.querySelector(`.map__filters`);
-
-  mapFilters.addEventListener(`change`, (evt) => {
+  const housingTypeFilter = mapFilters.querySelector(`#housing-type`);
+  const housingPriceFilter = mapFilters.querySelector(`#housing-price`);
+  const housingRoomsFilter = mapFilters.querySelector(`#housing-rooms`);
+  const housingGuestsFilter = mapFilters.querySelector(`#housing-guests`);
+  const housingFeaturesList = mapFilters.querySelectorAll(`.map__checkbox`);
+  const filterFunc = () => {
     let pins = window.data.serverData.slice();
     window.pin.getRemovePopup();
-    if (evt.target.id === `housing-type`) {
-      if (evt.target.value !== `any`) {
-        window.pin.getRemovePins();
+    window.pin.getRemovePins();
 
-        const sortedPins = pins.filter((pin) => {
-          return pin.offer.type === evt.target.value;
+    housingFeaturesList.forEach((element) => {
+      if (element.checked) {
+        const checkedElementFeature = element.id.replace(/filter-/gi, ``);
+        pins = pins.filter((pin) => {
+          return pin.offer.features.includes(checkedElementFeature);
         });
-
-        window.map.getPinMap(sortedPins);
-      } else {
-        window.pin.getRemovePins();
-        window.map.getPinMap(pins);
       }
-    }
-    // else if (evt.target.id === `housing-price`) {
-    //   console.log(pins);
-    //   console.log(evt.target.value);
+    });
 
-    //   if (evt.target.value === `middle`) {
-    //     window.pin.getRemovePins();
-    //     const sortedPins = pins.filter((pin) => {
-    //       return (pin.offer.price >= 10000) && (pin.offer.price <= 50000);
-    //     });
+    const filterPinsByType = (value) => {
+      pins = pins.filter((pin) => {
+        return pin.offer.type === value;
+      });
+    };
 
-    //     window.map.getPinMap(sortedPins);
-    //   }
-    // }
+    const filterPinsByPrice = (value) => {
+      pins = pins.filter((pin) => {
+        switch (value) {
+          case `middle`:
+            return (pin.offer.price >= 10000) && (pin.offer.price <= 50000);
+          case `low`:
+            return pin.offer.price < 10000;
+          case `high`:
+            return pin.offer.price > 50000;
+          default:
+            return false;
+        }
+      });
+    };
 
-  });
+    const filterPinsByRooms = (value) => {
+      pins = pins.filter((pin) => {
+        return pin.offer.price === Number(value);
+      });
+    };
 
+    const filterPinsByGuests = (value) => {
+      pins = pins.filter((pin) => {
+        return pin.offer.price === Number(value);
+      });
+    };
 
-  // const sortedCb = (pins) => {
-  //   window.data.serverData.filter((pin) => {
-  //     return console.log(pin);
-  //   })
-  //   window.map.getPinFragment(pins)
-  //   window.pin.getRemovePopup();
-  //   window.pin.getUnactivatePin();
-  // }
+    const Filter = [
+      {
+        name: housingTypeFilter,
+        filterFunction: filterPinsByType
+      },
+      {
+        name: housingPriceFilter,
+        filterFunction: filterPinsByPrice
+      },
+      {
+        name: housingRoomsFilter,
+        filterFunction: filterPinsByRooms
+      },
+      {
+        name: housingGuestsFilter,
+        filterFunction: filterPinsByGuests
+      },
+    ];
+
+    Filter.forEach((obj) => {
+      const selectValue = obj.name.value;
+      if (selectValue !== `any`) {
+        obj.filterFunction(selectValue);
+      }
+    });
+
+    window.map.getPinMap(pins);
+  };
+
+  mapFilters.addEventListener(`change`, window.debounce(filterFunc));
+
+  const filterReset = () => {
+    mapFilters.querySelectorAll(`select`).forEach((select) => {
+      select.value = `any`;
+    });
+    housingFeaturesList.forEach((element) => {
+      element.checked = false;
+    });
+  };
+
+  window.filter = {
+    getFilterReset: filterReset
+  };
 })();
