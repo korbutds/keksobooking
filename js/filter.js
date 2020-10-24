@@ -20,16 +20,13 @@
       }
     });
 
-    const pinTypeFunction = (value) => {
+    const filterPinsByType = (value) => {
       pins = pins.filter((pin) => {
-        if (value !== `any`) {
-          return pin.offer.type === value;
-        }
-        return pin.offer.type !== value;
+        return pin.offer.type === value;
       });
     };
 
-    const pinPriceFunction = (value) => {
+    const filterPinsByPrice = (value) => {
       pins = pins.filter((pin) => {
         switch (value) {
           case `middle`:
@@ -38,92 +35,49 @@
             return pin.offer.price < 10000;
           case `high`:
             return pin.offer.price > 50000;
+          default:
+            return false;
         }
-        return pin.offer.price !== value;
       });
     };
 
-    const pinRoomsFunction = (value) => {
+    const filterPinsByRooms = (value) => {
       pins = pins.filter((pin) => {
-        switch (value) {
-          case `1`:
-            return pin.offer.rooms === 1;
-          case `2`:
-            return pin.offer.rooms === 2;
-          case `3`:
-            return pin.offer.rooms === 3;
-        }
-        return pin.offer.price !== value;
+        return pin.offer.price === Number(value);
       });
     };
 
-    const pinsGuestsFunction = (value) => {
+    const filterPinsByGuests = (value) => {
       pins = pins.filter((pin) => {
-        switch (value) {
-          case `1`:
-            return pin.offer.guests === 1;
-          case `2`:
-            return pin.offer.guests === 2;
-          case `0`:
-            return pin.offer.guests === 0;
-        }
-        return pin.offer.price !== value;
+        return pin.offer.price === Number(value);
       });
     };
 
-    switch (housingTypeFilter.value) {
-      case `palace`:
-        pinTypeFunction(`palace`);
-        break;
-      case `flat`:
-        pinTypeFunction(`flat`);
-        break;
-      case `house`:
-        pinTypeFunction(`house`);
-        break;
-      case `bungalow`:
-        pinTypeFunction(`bungalow`);
-        break;
-      case `any`:
-        pinTypeFunction(`any`);
-        break;
-    }
+    const Filter = [
+      {
+        name: housingTypeFilter,
+        filterFunction: filterPinsByType
+      },
+      {
+        name: housingPriceFilter,
+        filterFunction: filterPinsByPrice
+      },
+      {
+        name: housingRoomsFilter,
+        filterFunction: filterPinsByRooms
+      },
+      {
+        name: housingGuestsFilter,
+        filterFunction: filterPinsByGuests
+      },
+    ];
 
-    switch (housingPriceFilter.value) {
-      case `middle`:
-        pinPriceFunction(`middle`);
-        break;
-      case `low`:
-        pinPriceFunction(`low`);
-        break;
-      case `high`:
-        pinPriceFunction(`high`);
-        break;
-    }
-
-    switch (housingRoomsFilter.value) {
-      case `1`:
-        pinRoomsFunction(`1`);
-        break;
-      case `2`:
-        pinRoomsFunction(`2`);
-        break;
-      case `3`:
-        pinRoomsFunction(`3`);
-        break;
-    }
-
-    switch (housingGuestsFilter.value) {
-      case `1`:
-        pinsGuestsFunction(`1`);
-        break;
-      case `2`:
-        pinsGuestsFunction(`2`);
-        break;
-      case `0`:
-        pinsGuestsFunction(`0`);
-        break;
-    }
+    Filter.forEach((obj) => {
+      const selectValue = obj.name.value;
+      if (selectValue !== `any`) {
+        obj.filterFunction(selectValue);
+      }
+    });
 
     window.map.getPinMap(pins);
   };
