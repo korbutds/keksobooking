@@ -105,6 +105,8 @@ const resetForm = () => {
   window.data.guestsSelect.value = standartValue.guestsValue;
   window.data.adPhoto.value = ``;
   window.data.adAvatar.value = ``;
+  window.pin.getRemovePopup();
+
   [...window.data.featuresCheckboxes].forEach((checkbox) => {
     checkbox.checked = false;
   });
