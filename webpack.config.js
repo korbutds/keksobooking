@@ -13,6 +13,7 @@ module.exports = {
     `./js/pin.js`,
     `./js/debounce.js`,
     `./js/filter.js`,
+    `./js/loader.js`,
     `./js/main.js`
   ],
   output: {
