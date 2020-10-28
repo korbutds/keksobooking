@@ -1,8 +1,5 @@
 'use strict';
-window.data.previewDict = {
-  'avatar': window.data.avatorPreview,
-  'images': window.data.adPicPreview
-};
+
 window.previewCb = (evt) => {
   const file = evt.target.files[0];
   const fileName = file.name.toLowerCase();
