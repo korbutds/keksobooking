@@ -24,8 +24,8 @@ const setDeactivePage = () => {
   window.data.mapPinMain.style.left = window.data.mapPinMainCoords.left;
   window.data.addressInput.value = `X: ${Math.round(window.data.mapPinMain.offsetLeft + window.data.PIN_WIDTH / 2)}, ${Math.round(window.data.mapPinMain.offsetTop + window.data.PIN_HEIGHT / 2)}`;
   window.pin.getRemovePins();
-  window.data.avatarLoad.addEventListener(`change`, window.previewCb(window.data.avatorPreview, window.data.PIC_TYPES));
-  window.data.adPicLoad.addEventListener(`change`, window.previewCb(window.data.adPicPreview, window.data.PIC_TYPES));
+  window.data.avatarLoad.removeEventListener(`change`, window.previewCb(window.data.avatorPreview, window.data.PIC_TYPES));
+  window.data.adPicLoad.removeEventListener(`change`, window.previewCb(window.data.adPicPreview, window.data.PIC_TYPES));
   window.filter.getFilterReset();
   window.data.avatorPreview.querySelector(`img`).src = `img/muffin-grey.svg`;
   window.data.adPicPreview.replaceChildren();
