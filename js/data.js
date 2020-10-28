@@ -18,6 +18,12 @@ window.data.mapPinMainCoords = {
   left: `570px`,
   top: `375px`
 };
+window.data.PIC_TYPES = [`jpg`, `jpeg`, `png`];
+window.data.avatarLoad = document.querySelector(`#avatar`);
+window.data.avatorPreview = document.querySelector(`.ad-form-header__preview`);
+
+window.data.adPicLoad = document.querySelector(`#images`);
+window.data.adPicPreview = document.querySelector(`.ad-form__photo`);
 window.data.PIN_WIDTH = window.data.mapPinMain.offsetWidth;
 window.data.PIN_HEIGHT = window.data.mapPinMain.offsetHeight;
 window.data.PIN_TAIL_HEIGHT = 22;
