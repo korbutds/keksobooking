@@ -1,10 +1,4 @@
 'use strict';
-const PIC_TYPES = [`jpg`, `jpeg`, `png`];
-const avatarLoad = document.querySelector(`#avatar`);
-const avatorPreview = document.querySelector(`.ad-form-header__preview`);
-
-const adPicLoad = document.querySelector(`#images`);
-const adPicPreview = document.querySelector(`.ad-form__photo`);
 
 window.previewCb = (preview, typesArray) => {
   return (evt) => {
@@ -38,8 +32,8 @@ window.previewCb = (preview, typesArray) => {
 
 
 // fotoCb(evt, avatorPreview, PIC_TYPES);
-avatarLoad.addEventListener(`change`, window.previewCb(avatorPreview, PIC_TYPES));
-adPicLoad.addEventListener(`change`, window.previewCb(adPicPreview, PIC_TYPES));
+// avatarLoad.addEventListener(`change`, window.previewCb(avatorPreview, PIC_TYPES));
+// adPicLoad.addEventListener(`change`, window.previewCb(adPicPreview, PIC_TYPES));
 
 // avatarLoad.addEventListener(`change`, (evt) => {
 //   const file = evt.target.files[0];
