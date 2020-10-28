@@ -1,36 +1,36 @@
 'use strict';
+window.data.previewDict = {
+  'avatar': window.data.avatorPreview,
+  'images': window.data.adPicPreview
+};
+window.previewCb = (evt) => {
+  const file = evt.target.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = window.data.PIC_TYPES.some((type) => {
+    return fileName.endsWith(type);
+  });
 
-window.previewCb = (preview, typesArray) => {
-  return (evt) => {
-    const file = evt.target.files[0];
-    const fileName = file.name.toLowerCase();
-
-    const matches = typesArray.some((type) => {
-      return fileName.endsWith(type);
+  if (matches) {
+    let reader = new FileReader();
+    reader.addEventListener(`load`, () => {
+      window.data.previewDict[evt.target.id].replaceChildren();
+      window.data.previewDict[evt.target.id].style.display = `flex`;
+      window.data.previewDict[evt.target.id].style.justifyContent = `center`;
+      const img = document.createElement(`img`);
+      img.src = reader.result;
+      img.alt = `Превью добавленного изображеия`;
+      img.style.width = `40px`;
+      img.style.height = `44px`;
+      img.style.alignSelf = `center`;
+      img.style.alignSelf = `center`;
+      window.data.previewDict[evt.target.id].appendChild(img);
     });
+    reader.readAsDataURL(file);
+  }
 
-    if (matches) {
-      let reader = new FileReader();
-      reader.addEventListener(`load`, () => {
-        preview.replaceChildren();
-        preview.style.display = `flex`;
-        preview.style.justifyContent = `center`;
-        const img = document.createElement(`img`);
-        img.src = reader.result;
-        img.alt = `Превью добавленного изображеия`;
-        img.style.width = `40px`;
-        img.style.height = `44px`;
-        img.style.alignSelf = `center`;
-        img.style.alignSelf = `center`;
-        preview.appendChild(img);
-      });
-      reader.readAsDataURL(file);
-    }
-
-  };
 };
 
-
+// console.log(window.previewCb());
 // fotoCb(evt, avatorPreview, PIC_TYPES);
 // avatarLoad.addEventListener(`change`, window.previewCb(avatorPreview, PIC_TYPES));
 // adPicLoad.addEventListener(`change`, window.previewCb(adPicPreview, PIC_TYPES));
