@@ -30,7 +30,9 @@ const getServerRequest = (xhr, successLoad, errorLoad, data = false) => {
   xhr.addEventListener(`timeout`, () => {
     errorLoad(`Запрос не успел выполниться за ${xhr.timeout}мс`, successFlag);
   });
-  xhr.send(data);
+  if (data === false) {
+    xhr.send();
+  }
 };
 
 const load = (successLoad, errorLoad) => {
