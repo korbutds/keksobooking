@@ -1,6 +1,15 @@
 'use strict';
 
+
 const letTransformElement = (element, limits, modal = element) => {
+  const adForm = document.querySelector(`.ad-form`);
+  const addressInput = adForm.querySelector(`#address`);
+  const mapPins = document.querySelector(`.map__pins`);
+  const mapPinMain = mapPins.querySelector(`.map__pin--main`);
+  const PIN_WIDTH = mapPinMain.offsetWidth;
+  const PIN_HEIGHT = mapPinMain.offsetHeight;
+  const PIN_TAIL_HEIGHT = 22;
+
 
   element.addEventListener(`mousedown`, (evt) => {
     evt.preventDefault();
@@ -40,7 +49,7 @@ const letTransformElement = (element, limits, modal = element) => {
         modal.style.left = `${limits.right}px`;
       }
 
-      window.data.addressInput.value = `Х: ${Math.round(modal.offsetLeft + window.data.PIN_WIDTH / 2)}, Y: ${Math.round(modal.offsetTop + window.data.PIN_HEIGHT + window.data.PIN_TAIL_HEIGHT)}`;
+      addressInput.value = `Х: ${Math.round(modal.offsetLeft + PIN_WIDTH / 2)}, Y: ${Math.round(modal.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
     };
 
     const onMouseUp = (upEvt) => {

@@ -4,6 +4,8 @@ module.exports = {
   entry: [
     `./js/util.js`,
     `./js/server.js`,
+    `./js/error-message.js`,
+    `./js/success-message.js`,
     `./js/data.js`,
     `./js/page-activate.js`,
     `./js/map.js`,
