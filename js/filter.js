@@ -52,7 +52,7 @@ const filterFunc = () => {
     });
   };
 
-  const Filter = [
+  const Filters = [
     {
       name: housingTypeFilter,
       filterFunction: filterPinsByType
@@ -71,7 +71,7 @@ const filterFunc = () => {
     },
   ];
 
-  Filter.forEach((obj) => {
+  Filters.forEach((obj) => {
     const selectValue = obj.name.value;
     if (selectValue !== `any`) {
       obj.filterFunction(selectValue);
