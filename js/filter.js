@@ -42,13 +42,13 @@ const filterFunc = () => {
 
   const filterPinsByRooms = (value) => {
     pins = pins.filter((pin) => {
-      return pin.offer.price === Number(value);
+      return pin.offer.rooms === Number(value);
     });
   };
 
   const filterPinsByGuests = (value) => {
     pins = pins.filter((pin) => {
-      return pin.offer.price === Number(value);
+      return pin.offer.guests === Number(value);
     });
   };
 

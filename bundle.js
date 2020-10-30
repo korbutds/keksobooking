@@ -232,7 +232,6 @@ const setActivePage = () => {
         adForm.classList.remove(`ad-form--disabled`);
         addressInput.value = `X: ${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, Y: ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
         addressInput.readOnly = true;
-        console.log(window.data.serverData);
         window.map.getPinMap(window.data.serverData);
         avatarLoad.addEventListener(`change`, window.previewCb);
         adPicLoad.addEventListener(`change`, window.previewCb);
@@ -772,13 +771,13 @@ const filterFunc = () => {
 
   const filterPinsByRooms = (value) => {
     pins = pins.filter((pin) => {
-      return pin.offer.price === Number(value);
+      return pin.offer.rooms === Number(value);
     });
   };
 
   const filterPinsByGuests = (value) => {
     pins = pins.filter((pin) => {
-      return pin.offer.price === Number(value);
+      return pin.offer.guests === Number(value);
     });
   };
 
