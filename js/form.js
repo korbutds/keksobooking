@@ -25,7 +25,7 @@ const PIN_HEIGHT = mapPinMain.offsetHeight;
 window.util.getDisabledElements(adFormFieldsets);
 window.util.getDisabledElements(mapFiltersElements);
 
-addressInput.value = `X: ${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, Y: ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT / 2)}`;
+addressInput.value = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT / 2)}`;
 
 const changeRoomTypeValue = (value) => {
   let roomPrice = 0;

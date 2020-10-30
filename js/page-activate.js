@@ -31,7 +31,7 @@ const setActivePage = () => {
         window.util.getUnDisabledElements(mapFiltersElements);
         orderMap.classList.remove(`map--faded`);
         adForm.classList.remove(`ad-form--disabled`);
-        addressInput.value = `X: ${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, Y: ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
+        addressInput.value = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
         addressInput.readOnly = true;
         window.map.getPinMap(window.data.serverData);
         avatarLoad.addEventListener(`change`, window.previewCb);

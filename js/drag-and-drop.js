@@ -49,7 +49,7 @@ const letTransformElement = (element, limits, modal = element) => {
         modal.style.left = `${limits.right}px`;
       }
 
-      addressInput.value = `Х: ${Math.round(modal.offsetLeft + PIN_WIDTH / 2)}, Y: ${Math.round(modal.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
+      addressInput.value = `${Math.round(modal.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(modal.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
     };
 
     const onMouseUp = (upEvt) => {
