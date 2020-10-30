@@ -25,16 +25,24 @@ const addressInput = adForm.querySelector(`#address`);
 
 const setActivePage = () => {
   return (evt) => {
-    if (orderMap.classList.contains(`map--faded`) && (evt.button === 0 || evt.code === `Enter`)) {
-      window.util.getUnDisabledElements(adFormFieldsets);
-      window.util.getUnDisabledElements(mapFiltersElements);
-      orderMap.classList.remove(`map--faded`);
-      adForm.classList.remove(`ad-form--disabled`);
-      addressInput.value = `X: ${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, Y: ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
-      addressInput.readOnly = true;
-      window.map.getPinMap(window.data.serverData);
-      avatarLoad.addEventListener(`change`, window.previewCb);
-      adPicLoad.addEventListener(`change`, window.previewCb);
+    if (window.data.serverData) {
+      if (orderMap.classList.contains(`map--faded`) && (evt.button === 0 || evt.code === `Enter`)) {
+        window.util.getUnDisabledElements(adFormFieldsets);
+        window.util.getUnDisabledElements(mapFiltersElements);
+        orderMap.classList.remove(`map--faded`);
+        adForm.classList.remove(`ad-form--disabled`);
+        addressInput.value = `X: ${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, Y: ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
+        addressInput.readOnly = true;
+        window.map.getPinMap(window.data.serverData);
+        avatarLoad.addEventListener(`change`, window.previewCb);
+        adPicLoad.addEventListener(`change`, window.previewCb);
+      }
+    } else {
+      window.data = {};
+      window.data.getServerData = (pins) => {
+        window.data.serverData = pins.slice();
+      };
+      window.server.load(window.data.getServerData, window.errorMessage);
     }
   };
 };

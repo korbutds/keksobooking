@@ -83,7 +83,7 @@ const filterFunc = () => {
 
 mapFilters.addEventListener(`change`, window.debounce(filterFunc));
 
-const filterReset = () => {
+const getFilterReset = () => {
   mapFilters.querySelectorAll(`select`).forEach((select) => {
     select.value = `any`;
   });
@@ -93,5 +93,5 @@ const filterReset = () => {
 };
 
 window.filter = {
-  getFilterReset: filterReset
+  getFilterReset
 };

@@ -4,7 +4,7 @@ const STATUS_CODE = {
   OK: 200
 };
 
-const TIMEOUT_IN_MS = 2000;
+const TIMEOUT_IN_MS = 1000;
 
 const getServerRequest = (xhr, successLoad, errorLoad, data = false) => {
   let successFlag = false;
@@ -32,6 +32,8 @@ const getServerRequest = (xhr, successLoad, errorLoad, data = false) => {
   });
   if (data === false) {
     xhr.send();
+  } else {
+    xhr.send(data);
   }
 };
 

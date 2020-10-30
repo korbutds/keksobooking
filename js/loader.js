@@ -24,9 +24,9 @@ window.previewCb = (evt) => {
       const img = document.createElement(`img`);
       img.src = reader.result;
       img.alt = `Превью добавленного изображеия`;
-      img.style.width = `40px`;
-      img.style.height = `44px`;
-      img.style.alignSelf = `center`;
+      img.style.width = `70px`;
+      img.style.height = `70px`;
+      img.style.borderRadius = `5px`;
       previewDict[evt.target.id].appendChild(img);
     });
     reader.readAsDataURL(file);
