@@ -1,5 +1,5 @@
 'use strict';
-
+const customErrorText = `Custom Error Text`;
 const adForm = document.querySelector(`.ad-form`);
 const adFormFieldsets = adForm.querySelectorAll(`.ad-form > fieldset`);
 const addressInput = adForm.querySelector(`#address`);
@@ -22,8 +22,8 @@ const mapPinMain = mapPins.querySelector(`.map__pin--main`);
 const PIN_WIDTH = mapPinMain.offsetWidth;
 const PIN_HEIGHT = mapPinMain.offsetHeight;
 
-window.util.getDisabledElements(adFormFieldsets);
-window.util.getDisabledElements(mapFiltersElements);
+window.util.setDisabledFormElements(adFormFieldsets);
+window.util.setDisabledFormElements(mapFiltersElements);
 
 addressInput.value = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT / 2)}`;
 
@@ -94,7 +94,7 @@ roomsSelect.addEventListener(`change`, (evt) => {
 
 adForm.addEventListener(`submit`, (evt) => {
   evt.preventDefault();
-  window.server.send(window.successMessage, window.errorMessage, new FormData(adForm));
+  window.server.send(new FormData(adForm), window.successMessage, window.error.errorUploadOn(customErrorText));
 });
 
 

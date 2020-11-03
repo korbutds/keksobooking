@@ -5,7 +5,7 @@ const housingPriceFilter = mapFilters.querySelector(`#housing-price`);
 const housingRoomsFilter = mapFilters.querySelector(`#housing-rooms`);
 const housingGuestsFilter = mapFilters.querySelector(`#housing-guests`);
 const housingFeaturesList = mapFilters.querySelectorAll(`.map__checkbox`);
-const filterFunc = () => {
+const filterData = () => {
   let pins = window.data.serverData.slice();
   window.pin.getRemovePopup();
   window.pin.getRemovePins();
@@ -81,7 +81,7 @@ const filterFunc = () => {
   window.map.getPinMap(pins);
 };
 
-mapFilters.addEventListener(`change`, window.debounce(filterFunc));
+mapFilters.addEventListener(`change`, window.debounce(filterData));
 
 const getFilterReset = () => {
   mapFilters.querySelectorAll(`select`).forEach((select) => {

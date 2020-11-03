@@ -15,4 +15,4 @@ const KEKS_PIN_FRINGE = {
 
 mapPinMain.addEventListener(`mousedown`, window.pageActivate.getActivePage());
 mapPinMain.addEventListener(`keydown`, window.pageActivate.getActivePage());
-window.dragAndDrop.getTransformElement(mapPinMain, KEKS_PIN_FRINGE);
+window.dragAndDrop.dragAndDropPin(mapPinMain, KEKS_PIN_FRINGE);

@@ -8,13 +8,13 @@ const getRandomElement = (array) => {
   return array[getRandomNumber(0, array.length - 1)];
 };
 
-const disabledElements = (disabledArray) => {
+const setDisabledFormElements = (disabledArray) => {
   for (const element of disabledArray) {
     element.disabled = true;
   }
 };
 
-const unDisabledElements = (undisabledArray) => {
+const setUnDisabledFormElements = (undisabledArray) => {
   for (const element of undisabledArray) {
     element.disabled = false;
   }
@@ -23,6 +23,6 @@ const unDisabledElements = (undisabledArray) => {
 window.util = {
   getRandomIntInclusive: getRandomNumber,
   getRandomArrayElement: getRandomElement,
-  getDisabledElements: disabledElements,
-  getUnDisabledElements: unDisabledElements
+  setDisabledFormElements,
+  setUnDisabledFormElements
 };

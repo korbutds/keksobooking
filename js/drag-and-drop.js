@@ -1,7 +1,7 @@
 'use strict';
 
 
-const letTransformElement = (element, limits, modal = element) => {
+const dragAndDropPin = (element, limits, modal = element) => {
   const adForm = document.querySelector(`.ad-form`);
   const addressInput = adForm.querySelector(`#address`);
   const mapPins = document.querySelector(`.map__pins`);
@@ -72,5 +72,5 @@ const letTransformElement = (element, limits, modal = element) => {
 };
 
 window.dragAndDrop = {
-  getTransformElement: letTransformElement
+  dragAndDropPin
 };
