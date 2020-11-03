@@ -1,6 +1,5 @@
 'use strict';
 
-
 const dragAndDropPin = (element, limits, modal = element) => {
   const adForm = document.querySelector(`.ad-form`);
   const addressInput = adForm.querySelector(`#address`);
@@ -39,14 +38,14 @@ const dragAndDropPin = (element, limits, modal = element) => {
       modal.style.top = `${modal.offsetTop - shift.y}px`;
       modal.style.left = `${modal.offsetLeft - shift.x}px`;
 
-      if (modal.offsetTop < limits.top) {
-        modal.style.top = `${limits.top}px`;
-      } else if (modal.offsetTop > limits.bottom) {
-        modal.style.top = `${limits.bottom}px`;
-      } else if (modal.offsetLeft < limits.left) {
-        modal.style.left = `${limits.left}px`;
-      } else if (modal.offsetLeft > limits.right) {
-        modal.style.left = `${limits.right}px`;
+      if (modal.offsetTop < limits.TOP) {
+        modal.style.top = `${limits.TOP}px`;
+      } else if (modal.offsetTop > limits.BOTTOM) {
+        modal.style.top = `${limits.BOTTOM}px`;
+      } else if (modal.offsetLeft < limits.LEFT) {
+        modal.style.left = `${limits.LEFT}px`;
+      } else if (modal.offsetLeft > limits.RIGHT) {
+        modal.style.left = `${limits.RIGHT}px`;
       }
 
       addressInput.value = `${Math.round(modal.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(modal.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;

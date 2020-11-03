@@ -30,27 +30,27 @@ const createAdPhotos = (card, photoArray) => {
 const createAdCard = (ad) => {
   const cardFragment = document.createDocumentFragment();
   const newCard = cardPopupTemplate.cloneNode(true);
+  const {author: avatar, offer: title, address, price, type, rooms, guests, checkin, checkout} = ad;
+  const avatarElement = newCard.querySelector(`.popup__avatar`);
+  avatarElement.src = avatar ? avatar : avatarElement.remove();
 
-  const avatar = newCard.querySelector(`.popup__avatar`);
-  avatar.src = ad.author.avatar ? ad.author.avatar : ad.remove();
+  const titleElement = newCard.querySelector(`.popup__title`);
+  titleElement.textContent = title ? title : titleElement.remove();
 
-  const title = newCard.querySelector(`.popup__title`);
-  title.textContent = ad.offer.title ? ad.offer.title : title.remove();
+  const addressElement = newCard.querySelector(`.popup__text--address`);
+  addressElement.textContent = address ? address : addressElement.remove();
 
-  const address = newCard.querySelector(`.popup__text--address`);
-  address.textContent = ad.offer.address ? ad.offer.address : address.remove();
+  const priceElement = newCard.querySelector(`.popup__text--price`);
+  priceElement.textContent = price ? `${price} ₽/ночь` : priceElement.remove();
 
-  const price = newCard.querySelector(`.popup__text--price`);
-  price.textContent = ad.offer.price ? `${ad.offer.price} ₽/ночь` : price.remove();
+  const typeElement = newCard.querySelector(`.popup__type`);
+  typeElement.textContent = type ? type : typeElement.remove();
 
-  const type = newCard.querySelector(`.popup__type`);
-  type.textContent = ad.offer.type ? ad.offer.type : type.remove();
+  const capacityElement = newCard.querySelector(`.popup__text--capacity`);
+  capacityElement.textContent = (rooms && guests) ? `${rooms} комнат для ${guests} гостей` : capacityElement.remove();
 
-  const capacity = newCard.querySelector(`.popup__text--capacity`);
-  capacity.textContent = (ad.offer.rooms && ad.offer.guests) ? `${ad.offer.rooms} комнат для ${ad.offer.guests} гостей` : capacity.remove();
-
-  const checkTime = newCard.querySelector(`.popup__text--time`);
-  checkTime.textContent = (ad.offer.checkin && ad.offer.checkout) ? `Заезд после ${ad.offer.checkin} выезд до ${ad.offer.checkout}` : checkTime.remove();
+  const checkTimeElement = newCard.querySelector(`.popup__text--time`);
+  checkTimeElement.textContent = (checkin && checkout) ? `Заезд после ${checkin} выезд до ${checkout}` : checkTimeElement.remove();
 
   createFeatureItem(newCard, ad.offer.features);
   createAdPhotos(newCard, ad.offer.photos);

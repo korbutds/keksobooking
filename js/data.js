@@ -1,8 +1,21 @@
 'use strict';
 
 window.data = {};
-window.data.getServerData = (data) => {
+const getServerData = (data) => {
   window.data.serverData = data.filter((pin) => pin.offer);
 };
-window.server.load(window.data.getServerData, window.error.errorUploadOn);
+
+const downloadErrorMessage = (errorMessage) => {
+  const node = document.createElement(`div`);
+  node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
+  node.style.position = `absolute`;
+  node.style.left = 0;
+  node.style.right = 0;
+  node.style.fontSize = `30px`;
+
+  node.textContent = errorMessage;
+  document.body.insertAdjacentElement(`afterbegin`, node);
+};
+
+window.server.load(getServerData, downloadErrorMessage);
 

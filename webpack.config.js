@@ -4,9 +4,9 @@ module.exports = {
   entry: [
     `./js/util.js`,
     `./js/server.js`,
+    `./js/data.js`,
     `./js/error-message.js`,
     `./js/success-message.js`,
-    `./js/data.js`,
     `./js/page-activate.js`,
     `./js/map.js`,
     `./js/drag-and-drop.js`,

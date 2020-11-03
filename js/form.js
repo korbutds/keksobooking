@@ -1,4 +1,5 @@
 'use strict';
+
 const customErrorText = `Custom Error Text`;
 const adForm = document.querySelector(`.ad-form`);
 const adFormFieldsets = adForm.querySelectorAll(`.ad-form > fieldset`);
@@ -94,7 +95,7 @@ roomsSelect.addEventListener(`change`, (evt) => {
 
 adForm.addEventListener(`submit`, (evt) => {
   evt.preventDefault();
-  window.server.send(new FormData(adForm), window.successMessage, window.error.errorUploadOn(customErrorText));
+  window.server.send(new FormData(adForm), window.createSuccessMessage, window.error.uploadErrorMessageOn(customErrorText));
 });
 
 
@@ -106,8 +107,7 @@ adForm.addEventListener(`reset`, (evt) => {
 
 });
 
-const standartValue = {
-  title: ``,
+const defaultFormValues = {
   roomTypeValue: `flat`,
   roomPrice: 1000,
   numberOfRooms: 1,
@@ -117,14 +117,14 @@ const standartValue = {
 
 const resetForm = () => {
   adTitle.value = ``;
-  roomTypeSelect.value = standartValue.roomTypeValue;
-  roomsSelect.value = standartValue.numberOfRooms;
+  roomTypeSelect.value = defaultFormValues.roomTypeValue;
+  roomsSelect.value = defaultFormValues.numberOfRooms;
   priceInput.value = ``;
-  priceInput.placeholder = standartValue.roomPrice;
+  priceInput.placeholder = defaultFormValues.roomPrice;
   description.value = ``;
-  timeInSelect.value = standartValue.timeInSelect;
+  timeInSelect.value = defaultFormValues.timeInSelect;
   timeOutSelect.value = timeInSelect.value;
-  guestsSelect.value = standartValue.guestsValue;
+  guestsSelect.value = defaultFormValues.guestsValue;
   adPhoto.value = ``;
   adAvatar.value = ``;
   window.pin.getRemovePopup();

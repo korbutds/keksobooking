@@ -23,28 +23,18 @@ const PIN_TAIL_HEIGHT = 22;
 const addressInput = adForm.querySelector(`#address`);
 
 
-const setActivePage = () => {
-  return (evt) => {
-    if (window.data.serverData) {
-      if (orderMap.classList.contains(`map--faded`) && (evt.button === 0 || evt.code === `Enter`)) {
-        window.util.setUnDisabledFormElements(adFormFieldsets);
-        window.util.setUnDisabledFormElements(mapFiltersElements);
-        orderMap.classList.remove(`map--faded`);
-        adForm.classList.remove(`ad-form--disabled`);
-        addressInput.value = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
-        addressInput.readOnly = true;
-        window.map.getPinMap(window.data.serverData);
-        avatarLoad.addEventListener(`change`, window.previewCb);
-        adPicLoad.addEventListener(`change`, window.previewCb);
-      }
-    } else {
-      window.data = {};
-      window.data.getServerData = (pins) => {
-        window.data.serverData = pins.slice();
-      };
-      window.server.load(window.data.getServerData, window.errorMessage);
-    }
-  };
+const setActivePage = (evt) => {
+  if (orderMap.classList.contains(`map--faded`) && (evt.button === 0 || evt.code === `Enter`)) {
+    window.util.setUnDisabledFormElements(adFormFieldsets);
+    window.util.setUnDisabledFormElements(mapFiltersElements);
+    orderMap.classList.remove(`map--faded`);
+    adForm.classList.remove(`ad-form--disabled`);
+    addressInput.value = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT + PIN_TAIL_HEIGHT)}`;
+    addressInput.readOnly = true;
+    window.map.getPinMap(window.data.serverData);
+    avatarLoad.addEventListener(`change`, window.addPreviewImage);
+    adPicLoad.addEventListener(`change`, window.addPreviewImage);
+  }
 };
 
 const setDeactivePage = () => {
@@ -56,9 +46,9 @@ const setDeactivePage = () => {
   mapPinMain.style.left = mapPinMainCoords.left;
   addressInput.value = `X: ${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT / 2)}`;
   window.pin.getRemovePins();
-  avatarLoad.removeEventListener(`change`, window.previewCb);
-  adPicLoad.removeEventListener(`change`, window.previewCb);
-  window.filter.getFilterReset();
+  avatarLoad.removeEventListener(`change`, window.addPreviewImage);
+  adPicLoad.removeEventListener(`change`, window.addPreviewImage);
+  window.filter.resetFilters();
   avatorPreview.querySelector(`img`).src = `img/muffin-grey.svg`;
   adPicPreview.replaceChildren();
 };

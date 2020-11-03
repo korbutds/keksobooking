@@ -7,7 +7,7 @@ const successTemplate = document.querySelector(`#success`)
 
 const newSuccessMessage = successTemplate.cloneNode(true);
 
-window.successMessage = () => {
+window.createSuccessMessage = () => {
   main.appendChild(newSuccessMessage);
   window.pageActivate.getDeactivePage();
   document.querySelector(`.ad-form`).reset();

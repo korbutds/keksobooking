@@ -5,7 +5,7 @@ const STATUS_CODE = {
   OK: 200
 };
 
-const TIMEOUT_IN_MS = 500;
+const TIMEOUT_IN_MS = 2000;
 
 const getServerRequest = (xhr, successLoad, errorLoad) => {
 

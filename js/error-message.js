@@ -12,38 +12,38 @@ const errorButton = errorElement.querySelector(`.error__button`);
 const createErrorPopup = (errorText) => {
   errorMessage.textContent = errorText;
   main.insertAdjacentElement(`beforeend`, errorElement);
-  errorButton.addEventListener(`click`, errorButtonClickOn);
-  document.addEventListener(`click`, errorPopupClickOn);
-  document.addEventListener(`keydown`, errorEscPressOn);
+  errorButton.addEventListener(`click`, onErrorButtonClick);
+  document.addEventListener(`click`, onErrorPopupClick);
+  document.addEventListener(`keydown`, onErrorEscPress);
 };
 
 const removeErrorPopup = () => {
   main.removeChild(errorElement);
-  errorButton.removeEventListener(`click`, errorButtonClickOn);
-  document.removeEventListener(`click`, errorPopupClickOn);
-  document.removeEventListener(`keydown`, errorEscPressOn);
+  errorButton.removeEventListener(`click`, onErrorButtonClick);
+  document.removeEventListener(`click`, onErrorPopupClick);
+  document.removeEventListener(`keydown`, onErrorEscPress);
 };
 
-const errorButtonClickOn = () => {
+const onErrorButtonClick = () => {
   removeErrorPopup();
 };
 
-const errorPopupClickOn = () => {
+const onErrorPopupClick = () => {
   removeErrorPopup();
 };
 
-const errorEscPressOn = (evt) => {
+const onErrorEscPress = (evt) => {
   if (evt.key === `Escape`) {
     removeErrorPopup();
   }
 };
 
-const errorUploadOn = (errorText) => {
+const uploadErrorMessage = (errorText) => {
   return () => {
     createErrorPopup(errorText);
   };
 };
 
 window.error = {
-  errorUploadOn
+  uploadErrorMessage
 };

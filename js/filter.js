@@ -1,11 +1,13 @@
 'use strict';
+
 const mapFilters = document.querySelector(`.map__filters`);
 const housingTypeFilter = mapFilters.querySelector(`#housing-type`);
 const housingPriceFilter = mapFilters.querySelector(`#housing-price`);
 const housingRoomsFilter = mapFilters.querySelector(`#housing-rooms`);
 const housingGuestsFilter = mapFilters.querySelector(`#housing-guests`);
 const housingFeaturesList = mapFilters.querySelectorAll(`.map__checkbox`);
-const filterData = () => {
+
+const getFilterData = () => {
   let pins = window.data.serverData.slice();
   window.pin.getRemovePopup();
   window.pin.getRemovePins();
@@ -81,9 +83,9 @@ const filterData = () => {
   window.map.getPinMap(pins);
 };
 
-mapFilters.addEventListener(`change`, window.debounce(filterData));
+mapFilters.addEventListener(`change`, window.debounce(getFilterData));
 
-const getFilterReset = () => {
+const resetFilters = () => {
   mapFilters.querySelectorAll(`select`).forEach((select) => {
     select.value = `any`;
   });
@@ -93,5 +95,5 @@ const getFilterReset = () => {
 };
 
 window.filter = {
-  getFilterReset
+  resetFilters
 };

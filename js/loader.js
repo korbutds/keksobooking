@@ -1,4 +1,5 @@
 'use strict';
+
 const avatorPreview = document.querySelector(`.ad-form-header__preview`);
 const adPicPreview = document.querySelector(`.ad-form__photo`);
 const PIC_TYPES = [`jpg`, `jpeg`, `png`];
@@ -8,7 +9,7 @@ const previewDict = {
   'images': adPicPreview
 };
 
-window.previewCb = (evt) => {
+window.addPreviewImage = (evt) => {
   const file = evt.target.files[0];
   const fileName = file.name.toLowerCase();
   const matches = PIC_TYPES.some((type) => {
