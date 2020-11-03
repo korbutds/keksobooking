@@ -5,6 +5,10 @@ const error = document.querySelector(`#error`)
 .content
 .querySelector(`.error`);
 
+const KeyboardButtons = {
+  ESCAPE: `Escape`
+};
+
 const errorElement = error.cloneNode(true);
 const errorMessage = errorElement.querySelector(`.error__message`);
 const errorButton = errorElement.querySelector(`.error__button`);
@@ -33,7 +37,7 @@ const onErrorPopupClick = () => {
 };
 
 const onErrorEscPress = (evt) => {
-  if (evt.key === `Escape`) {
+  if (evt.key === KeyboardButtons.ESCAPE) {
     removeErrorPopup();
   }
 };

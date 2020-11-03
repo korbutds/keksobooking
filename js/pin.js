@@ -3,6 +3,9 @@
 const orderMap = document.querySelector(`.map`);
 const mapPins = orderMap.querySelector(`.map__pins`);
 const mapFiltersContainer = orderMap.querySelector(`.map__filters-container`);
+const KeyboardButtons = {
+  ESCAPE: `Escape`
+};
 
 const activatePin = (pin) => {
   pin.classList.add(`map__pin--active`);
@@ -23,7 +26,7 @@ const removeCardPopup = () => {
 };
 
 const onPopupEscPress = (evt) => {
-  if (evt.key === `Escape`) {
+  if (evt.key === KeyboardButtons.ESCAPE) {
     evt.preventDefault();
     removeCardPopup(orderMap.querySelector(`.map__card.popup`));
     unactivatePin();

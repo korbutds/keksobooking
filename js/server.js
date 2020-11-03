@@ -5,6 +5,11 @@ const STATUS_CODE = {
   OK: 200
 };
 
+const MethodUrls = {
+  GET: `https://21.javascript.pages.academy/keksobooking/data`,
+  POST: `https://21.javascript.pages.academy/keksobooking`
+};
+
 const TIMEOUT_IN_MS = 2000;
 
 const getServerRequest = (xhr, successLoad, errorLoad) => {
@@ -30,14 +35,14 @@ const getServerRequest = (xhr, successLoad, errorLoad) => {
 
 const load = (successLoad, errorLoad) => {
   const xhr = new XMLHttpRequest();
-  xhr.open(`GET`, `https://21.javascript.pages.academy/keksobooking/data`);
+  xhr.open(`GET`, MethodUrls.GET);
   getServerRequest(xhr, successLoad, errorLoad);
   xhr.send();
 };
 
 const send = (data, successLoad, errorLoad) => {
   const xhr = new XMLHttpRequest();
-  xhr.open(`POST`, `https://21.javascript.pages.academy/keksobooking`);
+  xhr.open(`POST`, MethodUrls.POST);
   getServerRequest(xhr, successLoad, errorLoad);
   xhr.send(data);
 };

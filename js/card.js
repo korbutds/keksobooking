@@ -30,7 +30,7 @@ const createAdPhotos = (card, photoArray) => {
 const createAdCard = (ad) => {
   const cardFragment = document.createDocumentFragment();
   const newCard = cardPopupTemplate.cloneNode(true);
-  const {author: avatar, offer: title, address, price, type, rooms, guests, checkin, checkout} = ad;
+  const {author: {avatar}, offer: {title, address, price, type, rooms, guests, checkin, checkout}} = ad;
   const avatarElement = newCard.querySelector(`.popup__avatar`);
   avatarElement.src = avatar ? avatar : avatarElement.remove();
 

@@ -7,6 +7,11 @@ const housingRoomsFilter = mapFilters.querySelector(`#housing-rooms`);
 const housingGuestsFilter = mapFilters.querySelector(`#housing-guests`);
 const housingFeaturesList = mapFilters.querySelectorAll(`.map__checkbox`);
 
+const PriceLimits = {
+  LOW: 10000,
+  HIGH: 50000
+};
+
 const getFilterData = () => {
   let pins = window.data.serverData.slice();
   window.pin.getRemovePopup();
@@ -31,11 +36,11 @@ const getFilterData = () => {
     pins = pins.filter((pin) => {
       switch (value) {
         case `middle`:
-          return (pin.offer.price >= 10000) && (pin.offer.price <= 50000);
+          return (pin.offer.price >= PriceLimits.LOW) && (pin.offer.price <= PriceLimits.HIGH);
         case `low`:
-          return pin.offer.price < 10000;
+          return pin.offer.price < PriceLimits.LOW;
         case `high`:
-          return pin.offer.price > 50000;
+          return pin.offer.price > PriceLimits.HIGH;
         default:
           return false;
       }

@@ -13,6 +13,11 @@ const mapPinMainCoords = {
   left: `570px`,
   top: `375px`
 };
+const DefaultAvatarImageStyles = {
+  WIDTH: `40px`,
+  HEIGHT: `44px`,
+  SRC: `img/muffin-grey.svg`
+};
 const avatarLoad = document.querySelector(`#avatar`);
 const avatorPreview = document.querySelector(`.ad-form-header__preview`);
 const adPicLoad = document.querySelector(`#images`);
@@ -38,6 +43,7 @@ const setActivePage = (evt) => {
 };
 
 const setDeactivePage = () => {
+  const avatarImg = avatorPreview.querySelector(`img`);
   window.util.setDisabledFormElements(adFormFieldsets);
   window.util.setDisabledFormElements(mapFiltersElements);
   orderMap.classList.add(`map--faded`);
@@ -49,7 +55,9 @@ const setDeactivePage = () => {
   avatarLoad.removeEventListener(`change`, window.addPreviewImage);
   adPicLoad.removeEventListener(`change`, window.addPreviewImage);
   window.filter.resetFilters();
-  avatorPreview.querySelector(`img`).src = `img/muffin-grey.svg`;
+  avatarImg.style.width = DefaultAvatarImageStyles.WIDTH;
+  avatarImg.style.height = DefaultAvatarImageStyles.HEIGHT;
+  avatarImg.src = DefaultAvatarImageStyles.SRC;
   adPicPreview.replaceChildren();
 };
 

@@ -12,7 +12,7 @@ const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__
 
 const createPinFragment = (pins) => {
   const pinFragment = document.createDocumentFragment();
-  let pinsCount = (pins.length > PIN_NUMBER) ? PIN_NUMBER : pinsCount = pins.length;
+  let pinsCount = (pins.length > PIN_NUMBER) ? PIN_NUMBER : pins.length;
   for (let i = 0; i < pinsCount; i++) {
     const newPin = pinTemplate.cloneNode(true);
     const pinImage = newPin.querySelector(`img`);
@@ -29,7 +29,7 @@ const createPinsMap = (pins) => {
   const mockPins = createPinFragment(pins);
   mapSection.appendChild(mockPins);
   const pinsList = mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
-  let pinsCount = (pins.length > PIN_NUMBER) ? PIN_NUMBER : pinsCount = pins.length;
+  let pinsCount = (pins.length > PIN_NUMBER) ? PIN_NUMBER : pins.length;
 
   for (let i = 0; i < pinsCount; i++) {
     window.pin.onAdCardClick(pinsList[i], pins[i]);

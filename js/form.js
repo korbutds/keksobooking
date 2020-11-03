@@ -23,6 +23,28 @@ const mapPinMain = mapPins.querySelector(`.map__pin--main`);
 const PIN_WIDTH = mapPinMain.offsetWidth;
 const PIN_HEIGHT = mapPinMain.offsetHeight;
 
+const DefaultFormValues = {
+  ROOM_TYPE_VALUE: `flat`,
+  ROOM_PRICE: 1000,
+  NUMBER_OF_ROOMS: 1,
+  TIME_IN_SELECT: `12:00`,
+  GUESTS_VALUE: 1
+};
+
+const RoomsForGuests = {
+  1: [`1`],
+  2: [`1`, `2`],
+  3: [`1`, `2`, `3`],
+  100: [`0`]
+};
+
+const RoomsPrices = {
+  BUNGALOW: 0,
+  FLAT: 1000,
+  HOUSE: 5000,
+  PALACE: 10000
+};
+
 window.util.setDisabledFormElements(adFormFieldsets);
 window.util.setDisabledFormElements(mapFiltersElements);
 
@@ -32,16 +54,16 @@ const changeRoomTypeValue = (value) => {
   let roomPrice = 0;
   switch (value) {
     case `bungalow`:
-      roomPrice = 0;
+      roomPrice = RoomsPrices.BUNGALOW;
       break;
     case `flat`:
-      roomPrice = 1000;
+      roomPrice = RoomsPrices.FLAT;
       break;
     case `house`:
-      roomPrice = 5000;
+      roomPrice = RoomsPrices.HOUSE;
       break;
     case `palace`:
-      roomPrice = 10000;
+      roomPrice = RoomsPrices.PALACE;
       break;
   }
   priceInput.min = roomPrice;
@@ -73,16 +95,9 @@ timeOutSelect.addEventListener(`change`, (evt) =>{
   changeTimeInValue(evt.target.value);
 });
 
-const roomsForGuests = {
-  1: [`1`],
-  2: [`1`, `2`],
-  3: [`1`, `2`, `3`],
-  100: [`0`]
-};
-
 const changeRoomNumberValue = (value) => {
   [...guestsSelect.options].forEach((option) => {
-    option.disabled = !roomsForGuests[value].includes(option.value);
+    option.disabled = !RoomsForGuests[value].includes(option.value);
   });
   guestsSelect.value = value > 3 ? `0` : value;
 };
@@ -95,36 +110,26 @@ roomsSelect.addEventListener(`change`, (evt) => {
 
 adForm.addEventListener(`submit`, (evt) => {
   evt.preventDefault();
-  window.server.send(new FormData(adForm), window.createSuccessMessage, window.error.uploadErrorMessageOn(customErrorText));
+  window.server.send(new FormData(adForm), window.createSuccessMessage, window.error.uploadErrorMessage(customErrorText));
 });
-
 
 adForm.addEventListener(`reset`, (evt) => {
   evt.preventDefault();
   changeRoomNumberValue(roomsSelect.value);
   window.pageActivate.getDeactivePage();
   window.form.getResetForm();
-
 });
-
-const defaultFormValues = {
-  roomTypeValue: `flat`,
-  roomPrice: 1000,
-  numberOfRooms: 1,
-  timeInSelect: `12:00`,
-  guestsValue: 1
-};
 
 const resetForm = () => {
   adTitle.value = ``;
-  roomTypeSelect.value = defaultFormValues.roomTypeValue;
-  roomsSelect.value = defaultFormValues.numberOfRooms;
+  roomTypeSelect.value = DefaultFormValues.ROOM_TYPE_VALUE;
+  roomsSelect.value = DefaultFormValues.NUMBER_OF_ROOMS;
   priceInput.value = ``;
-  priceInput.placeholder = defaultFormValues.roomPrice;
+  priceInput.placeholder = DefaultFormValues.ROOM_PRICE;
   description.value = ``;
-  timeInSelect.value = defaultFormValues.timeInSelect;
+  timeInSelect.value = DefaultFormValues.TIME_IN_SELECT;
   timeOutSelect.value = timeInSelect.value;
-  guestsSelect.value = defaultFormValues.guestsValue;
+  guestsSelect.value = DefaultFormValues.GUESTS_VALUE;
   adPhoto.value = ``;
   adAvatar.value = ``;
   window.pin.getRemovePopup();

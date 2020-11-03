@@ -5,6 +5,10 @@ const successTemplate = document.querySelector(`#success`)
 .content
 .querySelector(`.success`);
 
+const KeyboardButtons = {
+  ESCAPE: `Escape`
+};
+
 const newSuccessMessage = successTemplate.cloneNode(true);
 
 window.createSuccessMessage = () => {
@@ -27,7 +31,7 @@ const onSuccessMessageClick = (evt) => {
   }
 };
 const onSuccessMessageEscape = (evt) => {
-  if (evt.code === `Escape`) {
+  if (evt.code === KeyboardButtons.ESCAPE) {
     removeSuccessMessage();
   }
 };
