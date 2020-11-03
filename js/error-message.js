@@ -40,7 +40,9 @@ const errorEscPressOn = (evt) => {
 };
 
 const errorUploadOn = (errorText) => {
-  createErrorPopup(errorText);
+  return () => {
+    createErrorPopup(errorText);
+  }
 };
 
 window.error = {

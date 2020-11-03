@@ -5,7 +5,7 @@ const STATUS_CODE = {
   OK: 200
 };
 
-const TIMEOUT_IN_MS = 1000;
+const TIMEOUT_IN_MS = 500;
 
 const getServerRequest = (xhr, successLoad, errorLoad) => {
 
@@ -37,7 +37,7 @@ const load = (successLoad, errorLoad) => {
 
 const send = (data, successLoad, errorLoad) => {
   const xhr = new XMLHttpRequest();
-  xhr.open(`POST`, `https://21.javascript.pages.academy/keksobookin`);
+  xhr.open(`POST`, `https://21.javascript.pages.academy/keksobooking`);
   getServerRequest(xhr, successLoad, errorLoad);
   xhr.send(data);
 };

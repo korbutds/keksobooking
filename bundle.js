@@ -50,7 +50,7 @@ const STATUS_CODE = {
   OK: 200
 };
 
-const TIMEOUT_IN_MS = 1000;
+const TIMEOUT_IN_MS = 500;
 
 const getServerRequest = (xhr, successLoad, errorLoad) => {
 
@@ -82,7 +82,7 @@ const load = (successLoad, errorLoad) => {
 
 const send = (data, successLoad, errorLoad) => {
   const xhr = new XMLHttpRequest();
-  xhr.open(`POST`, `https://21.javascript.pages.academy/keksobookin`);
+  xhr.open(`POST`, `https://21.javascript.pages.academy/keksobooking`);
   getServerRequest(xhr, successLoad, errorLoad);
   xhr.send(data);
 };
@@ -91,62 +91,6 @@ window.server = {
   load,
   send
 };
-
-// const STATUS_CODE = {
-//   OK: 200
-// };
-
-// const DATA_URL = {
-//   GET: `https://21.javascript.pages.academy/keksobooking/data`,
-//   SEND: `https://21.javascript.pages.academy/keksobooking`
-// };
-
-// const TIMEOUT_IN_MS = 1000;
-
-// const getServerRequest = (xhr, successLoad, errorLoad, data) => {
-//   let successFlag = false;
-
-//   if (data) {
-//     successFlag = true;
-//   }
-
-//   xhr.responseType = `json`;
-
-//   xhr.addEventListener(`load`, () => {
-//     if (xhr.status === STATUS_CODE.OK) {
-//       successLoad(xhr.response);
-//     } else {
-//       errorLoad(`Статус ответа: ${xhr.status} ${xhr.statusText}`, successFlag);
-//     }
-//   });
-//   xhr.timeout = TIMEOUT_IN_MS;
-
-//   xhr.addEventListener(`error`, () => {
-//     errorLoad(`Произошла ошибка соеденения. Проверьте соеденение с интернетом`, successFlag);
-//   });
-//   xhr.addEventListener(`timeout`, () => {
-//     errorLoad(`Запрос не успел выполниться за ${xhr.timeout}мс`, successFlag);
-//   });
-// };
-
-// const load = (successLoad, errorLoad) => {
-//   const xhr = new XMLHttpRequest();
-//   xhr.open(`GET`, DATA_URL.GET);
-//   getServerRequest(xhr, successLoad, errorLoad);
-//   xhr.send();
-// };
-
-// const send = (successLoad, errorLoad, data) => {
-//   const xhr = new XMLHttpRequest();
-//   xhr.open(`POST`, DATA_URL.SEND);
-//   getServerRequest(xhr, successLoad, errorLoad, data);
-//   xhr.send(data);
-// };
-
-// window.server = {
-//   load,
-//   send
-// };
 
 })();
 
@@ -198,46 +142,14 @@ const errorEscPressOn = (evt) => {
 };
 
 const errorUploadOn = (errorText) => {
-  createErrorPopup(errorText);
+  return () => {
+    createErrorPopup(errorText);
+  }
 };
 
 window.error = {
   errorUploadOn
 };
-
-
-// const errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
-
-// window.errorMessage = (errorText, flag) => {
-//   const errorFragment = document.createDocumentFragment();
-//   const newErrMessage = errorTemplate.cloneNode(true);
-//   newErrMessage.querySelector(`.error__message`).textContent = errorText;
-//   errorFragment.appendChild(newErrMessage);
-//   document.querySelector(`.map__pins`).appendChild(errorFragment);
-//   const errorButton = newErrMessage.querySelector(`.error__button`);
-
-//   const onErrorButtonClick = () => {
-//     newErrMessage.remove();
-//     errorButton.removeEventListener(`click`, onErrorButtonClick);
-//     if (!flag) {
-//       window.pageActivate.getDeactivePage();
-//     }
-//   };
-
-//   const outOfErrorMessage = () => {
-//     return (evt) => {
-//       if (evt.code === `Escape` || evt.button === 0) {
-//         onErrorButtonClick();
-
-//         document.removeEventListener(`mousedown`, outOfErrorMessage());
-//         document.removeEventListener(`keydown`, outOfErrorMessage());
-//       }
-//     };
-//   };
-//   errorButton.addEventListener(`click`, onErrorButtonClick);
-//   document.addEventListener(`keydown`, outOfErrorMessage());
-//   document.addEventListener(`mousedown`, outOfErrorMessage());
-// };
 
 })();
 
@@ -257,17 +169,15 @@ window.successMessage = () => {
   document.querySelector(`main`).appendChild(successFragment);
   window.pageActivate.getDeactivePage();
   document.querySelector(`.ad-form`).reset();
-  const outOfSuccessMessage = () => {
-    return (evt) => {
-      if (evt.code === `Escape` || evt.button === 0) {
-        newSuccessMessage.remove();
-        document.removeEventListener(`click`, outOfSuccessMessage());
-        document.removeEventListener(`keydown`, outOfSuccessMessage());
-      }
-    };
+  const outOfSuccessMessage = (evt) => {
+    if (evt.code === `Escape` || evt.button === 0) {
+      newSuccessMessage.remove();
+      document.removeEventListener(`click`, outOfSuccessMessage);
+      document.removeEventListener(`keydown`, outOfSuccessMessage);
+    }
   };
-  document.addEventListener(`click`, outOfSuccessMessage());
-  document.addEventListener(`keydown`, outOfSuccessMessage());
+  document.addEventListener(`click`, outOfSuccessMessage);
+  document.addEventListener(`keydown`, outOfSuccessMessage);
 };
 
 
@@ -542,7 +452,6 @@ const mapPins = document.querySelector(`.map__pins`);
 const mapPinMain = mapPins.querySelector(`.map__pin--main`);
 const PIN_WIDTH = mapPinMain.offsetWidth;
 const PIN_HEIGHT = mapPinMain.offsetHeight;
-const onDataSendError = window.error.errorUploadOn(customErrorText);
 
 window.util.setDisabledFormElements(adFormFieldsets);
 window.util.setDisabledFormElements(mapFiltersElements);
