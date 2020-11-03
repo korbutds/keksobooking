@@ -8,14 +8,19 @@ window.successMessage = () => {
   document.querySelector(`main`).appendChild(successFragment);
   window.pageActivate.getDeactivePage();
   document.querySelector(`.ad-form`).reset();
-  const outOfSuccessMessage = (evt) => {
-    if (evt.code === `Escape` || evt.button === 0) {
+  const onSuccessMessageClick = (evt) => {
+    if (evt.button === 0) {
       newSuccessMessage.remove();
-      document.removeEventListener(`click`, outOfSuccessMessage);
-      document.removeEventListener(`keydown`, outOfSuccessMessage);
+      document.removeEventListener(`click`, onSuccessMessageClick);
     }
   };
-  document.addEventListener(`click`, outOfSuccessMessage);
-  document.addEventListener(`keydown`, outOfSuccessMessage);
+  const onSuccessMessageEscape = (evt) => {
+    if (evt.code === `Escape`) {
+      newSuccessMessage.remove();
+      document.removeEventListener(`keydown`, onSuccessMessageEscape);
+    }
+  };
+  document.addEventListener(`click`, onSuccessMessageClick);
+  document.addEventListener(`keydown`, onSuccessMessageEscape);
 };
 
