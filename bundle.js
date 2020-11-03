@@ -121,7 +121,6 @@ const createErrorPopup = (errorText) => {
 
 const removeErrorPopup = () => {
   main.removeChild(errorElement);
-  // window.pageActivate.getDeactivePage();
   errorButton.removeEventListener(`click`, errorButtonClickOn);
   document.removeEventListener(`click`, errorPopupClickOn);
   document.removeEventListener(`keydown`, errorEscPressOn);
@@ -144,7 +143,7 @@ const errorEscPressOn = (evt) => {
 const errorUploadOn = (errorText) => {
   return () => {
     createErrorPopup(errorText);
-  }
+  };
 };
 
 window.error = {
@@ -161,23 +160,36 @@ window.error = {
 /*! runtime requirements:  */
 
 
-const successTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
+const main = document.querySelector(`main`);
+const successTemplate = document.querySelector(`#success`)
+.content
+.querySelector(`.success`);
+
+const newSuccessMessage = successTemplate.cloneNode(true);
+
 window.successMessage = () => {
-  const successFragment = document.createDocumentFragment();
-  const newSuccessMessage = successTemplate.cloneNode(true);
-  successFragment.appendChild(newSuccessMessage);
-  document.querySelector(`main`).appendChild(successFragment);
+  main.appendChild(newSuccessMessage);
   window.pageActivate.getDeactivePage();
   document.querySelector(`.ad-form`).reset();
-  const outOfSuccessMessage = (evt) => {
-    if (evt.code === `Escape` || evt.button === 0) {
-      newSuccessMessage.remove();
-      document.removeEventListener(`click`, outOfSuccessMessage);
-      document.removeEventListener(`keydown`, outOfSuccessMessage);
-    }
-  };
-  document.addEventListener(`click`, outOfSuccessMessage);
-  document.addEventListener(`keydown`, outOfSuccessMessage);
+  document.addEventListener(`click`, onSuccessMessageClick);
+  document.addEventListener(`keydown`, onSuccessMessageEscape);
+};
+
+const removeSuccessMessage = () => {
+  newSuccessMessage.remove();
+  document.removeEventListener(`click`, onSuccessMessageClick);
+  document.removeEventListener(`keydown`, onSuccessMessageEscape);
+};
+
+const onSuccessMessageClick = (evt) => {
+  if (evt.button === 0) {
+    removeSuccessMessage();
+  }
+};
+const onSuccessMessageEscape = (evt) => {
+  if (evt.code === `Escape`) {
+    removeSuccessMessage();
+  }
 };
 
 
@@ -195,7 +207,7 @@ window.data = {};
 window.data.getServerData = (data) => {
   window.data.serverData = data.filter((pin) => pin.offer);
 };
-window.server.load(window.data.getServerData, window.errorMessage);
+window.server.load(window.data.getServerData, window.error.errorUploadOn);
 
 
 })();

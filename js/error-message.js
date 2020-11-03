@@ -19,7 +19,6 @@ const createErrorPopup = (errorText) => {
 
 const removeErrorPopup = () => {
   main.removeChild(errorElement);
-  // window.pageActivate.getDeactivePage();
   errorButton.removeEventListener(`click`, errorButtonClickOn);
   document.removeEventListener(`click`, errorPopupClickOn);
   document.removeEventListener(`keydown`, errorEscPressOn);
