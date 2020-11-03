@@ -4,6 +4,8 @@ module.exports = {
   entry: [
     `./js/util.js`,
     `./js/server.js`,
+    `./js/error-message.js`,
+    `./js/success-message.js`,
     `./js/data.js`,
     `./js/page-activate.js`,
     `./js/map.js`,
@@ -13,6 +15,7 @@ module.exports = {
     `./js/pin.js`,
     `./js/debounce.js`,
     `./js/filter.js`,
+    `./js/loader.js`,
     `./js/main.js`
   ],
   output: {

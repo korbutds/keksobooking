@@ -5,7 +5,7 @@ const housingPriceFilter = mapFilters.querySelector(`#housing-price`);
 const housingRoomsFilter = mapFilters.querySelector(`#housing-rooms`);
 const housingGuestsFilter = mapFilters.querySelector(`#housing-guests`);
 const housingFeaturesList = mapFilters.querySelectorAll(`.map__checkbox`);
-const filterFunc = () => {
+const filterData = () => {
   let pins = window.data.serverData.slice();
   window.pin.getRemovePopup();
   window.pin.getRemovePins();
@@ -42,17 +42,17 @@ const filterFunc = () => {
 
   const filterPinsByRooms = (value) => {
     pins = pins.filter((pin) => {
-      return pin.offer.price === Number(value);
+      return pin.offer.rooms === Number(value);
     });
   };
 
   const filterPinsByGuests = (value) => {
     pins = pins.filter((pin) => {
-      return pin.offer.price === Number(value);
+      return pin.offer.guests === Number(value);
     });
   };
 
-  const Filter = [
+  const Filters = [
     {
       name: housingTypeFilter,
       filterFunction: filterPinsByType
@@ -71,7 +71,7 @@ const filterFunc = () => {
     },
   ];
 
-  Filter.forEach((obj) => {
+  Filters.forEach((obj) => {
     const selectValue = obj.name.value;
     if (selectValue !== `any`) {
       obj.filterFunction(selectValue);
@@ -81,9 +81,9 @@ const filterFunc = () => {
   window.map.getPinMap(pins);
 };
 
-mapFilters.addEventListener(`change`, window.debounce(filterFunc));
+mapFilters.addEventListener(`change`, window.debounce(filterData));
 
-const filterReset = () => {
+const getFilterReset = () => {
   mapFilters.querySelectorAll(`select`).forEach((select) => {
     select.value = `any`;
   });
@@ -93,5 +93,5 @@ const filterReset = () => {
 };
 
 window.filter = {
-  getFilterReset: filterReset
+  getFilterReset
 };

@@ -30,13 +30,28 @@ const createAdPhotos = (card, photoArray) => {
 const createAdCard = (ad) => {
   const cardFragment = document.createDocumentFragment();
   const newCard = cardPopupTemplate.cloneNode(true);
-  newCard.querySelector(`.popup__title`).textContent = ad.offer.title;
-  newCard.querySelector(`.popup__text--address`).textContent = ad.offer.address;
-  newCard.querySelector(`.popup__text--price`).textContent = `${ad.offer.price} ₽/ночь`;
-  newCard.querySelector(`.popup__type`).textContent = ad.offer.type;
-  newCard.querySelector(`.popup__text--capacity`).textContent = `${ad.offer.rooms} комнат для ${ad.offer.guests} гостей`;
-  newCard.querySelector(`.popup__text--time`).textContent = `Заезд после ${ad.offer.checkin} выезд до ${ad.offer.checkout}`;
-  newCard.querySelector(`.popup__avatar`).src = ad.author.avatar;
+
+  const avatar = newCard.querySelector(`.popup__avatar`);
+  avatar.src = ad.author.avatar ? ad.author.avatar : ad.remove();
+
+  const title = newCard.querySelector(`.popup__title`);
+  title.textContent = ad.offer.title ? ad.offer.title : title.remove();
+
+  const address = newCard.querySelector(`.popup__text--address`);
+  address.textContent = ad.offer.address ? ad.offer.address : address.remove();
+
+  const price = newCard.querySelector(`.popup__text--price`);
+  price.textContent = ad.offer.price ? `${ad.offer.price} ₽/ночь` : price.remove();
+
+  const type = newCard.querySelector(`.popup__type`);
+  type.textContent = ad.offer.type ? ad.offer.type : type.remove();
+
+  const capacity = newCard.querySelector(`.popup__text--capacity`);
+  capacity.textContent = (ad.offer.rooms && ad.offer.guests) ? `${ad.offer.rooms} комнат для ${ad.offer.guests} гостей` : capacity.remove();
+
+  const checkTime = newCard.querySelector(`.popup__text--time`);
+  checkTime.textContent = (ad.offer.checkin && ad.offer.checkout) ? `Заезд после ${ad.offer.checkin} выезд до ${ad.offer.checkout}` : checkTime.remove();
+
   createFeatureItem(newCard, ad.offer.features);
   createAdPhotos(newCard, ad.offer.photos);
   cardFragment.appendChild(newCard);

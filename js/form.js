@@ -1,9 +1,31 @@
 'use strict';
+const customErrorText = `Custom Error Text`;
+const adForm = document.querySelector(`.ad-form`);
+const adFormFieldsets = adForm.querySelectorAll(`.ad-form > fieldset`);
+const addressInput = adForm.querySelector(`#address`);
+const adAvatar = adForm.querySelector(`#avatar`);
+const adTitle = adForm.querySelector(`#title`);
+const guestsSelect = adForm.querySelector(`#capacity`);
+const roomsSelect = adForm.querySelector(`#room_number`);
+const roomTypeSelect = adForm.querySelector(`#type`);
+const timeInSelect = adForm.querySelector(`#timein`);
+const timeOutSelect = adForm.querySelector(`#timeout`);
+const priceInput = adForm.querySelector(`#price`);
+const description = adForm.querySelector(`#description`);
+const adPhoto = adForm.querySelector(`#images`);
+const featuresCheckboxes = adForm.querySelectorAll(`.feature__checkbox`);
 
-window.util.getDisabledElements(window.data.adFormFieldsets);
-window.util.getDisabledElements(window.data.mapFiltersElements);
+const mapFilters = document.querySelector(`.map__filters`);
+const mapFiltersElements = mapFilters.children;
+const mapPins = document.querySelector(`.map__pins`);
+const mapPinMain = mapPins.querySelector(`.map__pin--main`);
+const PIN_WIDTH = mapPinMain.offsetWidth;
+const PIN_HEIGHT = mapPinMain.offsetHeight;
 
-window.data.addressInput.value = window.data.mainPinXY;
+window.util.setDisabledFormElements(adFormFieldsets);
+window.util.setDisabledFormElements(mapFiltersElements);
+
+addressInput.value = `${Math.round(mapPinMain.offsetLeft + PIN_WIDTH / 2)}, ${Math.round(mapPinMain.offsetTop + PIN_HEIGHT / 2)}`;
 
 const changeRoomTypeValue = (value) => {
   let roomPrice = 0;
@@ -21,32 +43,32 @@ const changeRoomTypeValue = (value) => {
       roomPrice = 10000;
       break;
   }
-  window.data.priceInput.min = roomPrice;
-  window.data.priceInput.placeholder = roomPrice;
+  priceInput.min = roomPrice;
+  priceInput.placeholder = roomPrice;
 };
 
 const changeTimeOutValue = (value) => {
-  window.data.timeOutSelect.value = value;
+  timeOutSelect.value = value;
 };
 
 const changeTimeInValue = (value) => {
-  window.data.timeInSelect.value = value;
+  timeInSelect.value = value;
 };
 
-changeRoomTypeValue(window.data.roomTypeSelect.value);
+changeRoomTypeValue(roomTypeSelect.value);
 
-window.data.roomTypeSelect.addEventListener(`change`, (evt) => {
+roomTypeSelect.addEventListener(`change`, (evt) => {
   changeRoomTypeValue(evt.target.value);
 });
 
 
-changeTimeOutValue(window.data.timeInSelect.value);
+changeTimeOutValue(timeInSelect.value);
 
-window.data.timeInSelect.addEventListener(`change`, (evt) => {
+timeInSelect.addEventListener(`change`, (evt) => {
   changeTimeOutValue(evt.target.value);
 });
 
-window.data.timeOutSelect.addEventListener(`change`, (evt) =>{
+timeOutSelect.addEventListener(`change`, (evt) =>{
   changeTimeInValue(evt.target.value);
 });
 
@@ -58,27 +80,27 @@ const roomsForGuests = {
 };
 
 const changeRoomNumberValue = (value) => {
-  [...window.data.guestsSelect.options].forEach((option) => {
+  [...guestsSelect.options].forEach((option) => {
     option.disabled = !roomsForGuests[value].includes(option.value);
   });
-  window.data.guestsSelect.value = value > 3 ? `0` : value;
+  guestsSelect.value = value > 3 ? `0` : value;
 };
 
-changeRoomNumberValue(window.data.roomsSelect.value);
+changeRoomNumberValue(roomsSelect.value);
 
-window.data.roomsSelect.addEventListener(`change`, (evt) => {
+roomsSelect.addEventListener(`change`, (evt) => {
   changeRoomNumberValue(evt.target.value);
 });
 
-window.data.adForm.addEventListener(`submit`, (evt) => {
+adForm.addEventListener(`submit`, (evt) => {
   evt.preventDefault();
-  window.server.getServerRequest(window.data.saveData, window.server.getSuccessMessage, window.server.getErrorMessage, new FormData(window.data.adForm));
+  window.server.send(new FormData(adForm), window.successMessage, window.error.errorUploadOn(customErrorText));
 });
 
 
-window.data.adForm.addEventListener(`reset`, (evt) => {
+adForm.addEventListener(`reset`, (evt) => {
   evt.preventDefault();
-  changeRoomNumberValue(window.data.roomsSelect.value);
+  changeRoomNumberValue(roomsSelect.value);
   window.pageActivate.getDeactivePage();
   window.form.getResetForm();
 
@@ -94,20 +116,20 @@ const standartValue = {
 };
 
 const resetForm = () => {
-  window.data.adTitle.value = ``;
-  window.data.roomTypeSelect.value = standartValue.roomTypeValue;
-  window.data.roomsSelect.value = standartValue.numberOfRooms;
-  window.data.priceInput.value = ``;
-  window.data.priceInput.placeholder = standartValue.roomPrice;
-  window.data.description.value = ``;
-  window.data.timeInSelect.value = standartValue.timeInSelect;
-  window.data.timeOutSelect.value = window.data.timeInSelect.value;
-  window.data.guestsSelect.value = standartValue.guestsValue;
-  window.data.adPhoto.value = ``;
-  window.data.adAvatar.value = ``;
+  adTitle.value = ``;
+  roomTypeSelect.value = standartValue.roomTypeValue;
+  roomsSelect.value = standartValue.numberOfRooms;
+  priceInput.value = ``;
+  priceInput.placeholder = standartValue.roomPrice;
+  description.value = ``;
+  timeInSelect.value = standartValue.timeInSelect;
+  timeOutSelect.value = timeInSelect.value;
+  guestsSelect.value = standartValue.guestsValue;
+  adPhoto.value = ``;
+  adAvatar.value = ``;
   window.pin.getRemovePopup();
 
-  [...window.data.featuresCheckboxes].forEach((checkbox) => {
+  [...featuresCheckboxes].forEach((checkbox) => {
     checkbox.checked = false;
   });
 };
